@@ -17,8 +17,8 @@ DESTINATION = "https://forms.gle/vhYko4os3o6hY12L7"
 OUT = "assets/img/codecrypt-qr.svg"
 
 # Brand colours (see style.css custom properties).
-DARK = "#062B4F"
-LIGHT = "#FFFFFF"
+DARK = "#111817"  # approved deep charcoal
+LIGHT = "#F0EDEE"  # approved soft off-white
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 

@@ -1,71 +1,78 @@
 /* ==========================================================================
    Code Crypt — design system
    --------------------------------------------------------------------------
-   Visual language adapted from Oxford CompSoc: deep navy canvas, hairline
-   technical borders, mono uppercase labels, a cyan -> teal -> violet accent
-   gradient, and a pointer-reactive circuit field.
+   Visual language adapted from Oxford CompSoc, whose pointer-reactive
+   background canvas is reproduced in script.js (initField).
 
-   Palette is tuned from the supplied club logo:
-     logo navy    #183054 / #1D3E5E
-     logo cyan    #54C0CC
-     logo violet  #C4ACD2
+   Approved palette — these three are the only brand colours:
+     muted teal      #2C666E
+     soft off-white  #F0EDEE
+     deep charcoal   #111817
+
+   Everything else in this file is either one of those three colours at a
+   reduced alpha, or a documented shade/tint blended from two of them
+   (needed for borders, raised surfaces and readable secondary text).
+   The one deliberate exception is the Tech Tiranga flag bar in section 21,
+   which is existing event content.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. Tokens
    -------------------------------------------------------------------------- */
 :root {
-  /* Brand ---------------------------------------------------------- */
-  --navy-950: #030d17;
-  --navy-900: #05192b;
-  --navy-850: #072033;
-  --navy-800: #062b4f;
-  --navy-700: #0b3a60;
-  --navy-600: #1d3e5e;
-  --cyan-500: #16d9e8;
-  --cyan-400: #54c0cc;
-  --teal-500: #00afaf;
-  --violet-400: #c77dff;
-  --violet-300: #c4acd2;
-  --white: #ffffff;
+  /* Approved palette ------------------------------------------------- */
+  --teal-600: #2c666e; /* muted teal      (approved) */
+  --off-white: #f0edee; /* soft off-white (approved) */
+  --charcoal-900: #111817; /* deep charcoal (approved) */
 
-  /* Surfaces ------------------------------------------------------- */
-  --bg: var(--navy-900);
-  --surface: rgba(13, 40, 66, 0.55);
-  --surface-2: rgba(7, 32, 51, 0.72);
-  --surface-solid: #08243b;
+  /* Shades of the approved charcoal (charcoal blended toward black) --- */
+  --charcoal-950: #0c1110;
+  --charcoal-850: #161e1d;
+  --charcoal-800: #1b2423;
 
-  /* Text ----------------------------------------------------------- */
-  --ink: #e9f4fb;
-  --ink-dim: #a9c2d6;
-  --ink-soft: #7e9bb4;
+  /* Tints of the approved teal (teal blended toward off-white) -------- */
+  --teal-400: #6a9196;
+  --teal-300: #8fa9ad;
 
-  /* Lines ---------------------------------------------------------- */
-  --line: rgba(84, 192, 204, 0.2);
-  --line-strong: rgba(84, 192, 204, 0.42);
+  /* Tints of the approved off-white (off-white blended toward charcoal) */
+  --off-white-dim: #c8c5c6;
+  --off-white-soft: #9a9899;
 
-  /* Accents -------------------------------------------------------- */
-  --accent: var(--cyan-500);
-  --accent-2: var(--teal-500);
-  --accent-3: var(--violet-400);
-  --gradient: linear-gradient(110deg, var(--cyan-500) 0%, var(--teal-500) 48%, var(--violet-400) 100%);
-  --gradient-soft: linear-gradient(110deg, rgba(22, 217, 232, 0.16), rgba(199, 125, 255, 0.12));
-  --gradient-text: linear-gradient(100deg, var(--cyan-500) 0%, var(--cyan-400) 38%, var(--violet-400) 100%);
+  /* Surfaces --------------------------------------------------------- */
+  --bg: var(--charcoal-900);
+  --surface: rgba(27, 36, 35, 0.82);
+  --surface-2: rgba(22, 30, 29, 0.9);
+  --surface-solid: var(--charcoal-800);
 
-  /* Type ----------------------------------------------------------- */
+  /* Text ------------------------------------------------------------- */
+  --ink: var(--off-white);
+  --ink-dim: var(--off-white-dim);
+  --ink-soft: var(--off-white-soft);
+
+  /* Lines ------------------------------------------------------------ */
+  --line: rgba(44, 102, 110, 0.5);
+  --line-strong: rgba(44, 102, 110, 0.8);
+
+  /* Accents ---------------------------------------------------------- */
+  --accent: var(--teal-400);
+  --gradient: linear-gradient(110deg, var(--teal-600) 0%, var(--teal-400) 55%, var(--off-white) 100%);
+  --gradient-soft: linear-gradient(110deg, rgba(44, 102, 110, 0.28), rgba(240, 237, 238, 0.12));
+  --gradient-text: linear-gradient(100deg, var(--teal-300) 0%, var(--off-white) 55%, var(--off-white) 100%);
+
+  /* Type ------------------------------------------------------------- */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-body: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  /* Metrics -------------------------------------------------------- */
+  /* Metrics ---------------------------------------------------------- */
   --wrap: 1180px;
   --nav-h: 74px;
   --r-xs: 4px;
   --r-sm: 6px;
   --r: 10px;
   --r-lg: 16px;
-  --shadow: 0 18px 50px -22px rgba(2, 9, 16, 0.95);
-  --glow: 0 0 0 1px rgba(22, 217, 232, 0.16), 0 22px 60px -24px rgba(2, 9, 16, 0.95);
+  --shadow: 0 18px 50px -22px rgba(10, 14, 13, 0.9);
+  --glow: 0 0 0 1px rgba(44, 102, 110, 0.45), 0 22px 60px -24px rgba(10, 14, 13, 0.9);
 
   --ease: cubic-bezier(0.22, 0.68, 0.36, 1);
 }
@@ -93,11 +100,6 @@ body {
   line-height: 1.65;
   color: var(--ink);
   background-color: var(--bg);
-  background-image:
-    radial-gradient(1100px 620px at 12% -8%, rgba(22, 217, 232, 0.14), transparent 62%),
-    radial-gradient(900px 560px at 92% 4%, rgba(199, 125, 255, 0.12), transparent 60%),
-    linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
-  background-attachment: fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -116,7 +118,7 @@ a {
 }
 
 a:hover {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 ul {
@@ -141,12 +143,12 @@ p {
 }
 
 ::selection {
-  background: rgba(22, 217, 232, 0.32);
-  color: var(--white);
+  background: rgba(106, 145, 150, 0.32);
+  color: var(--off-white);
 }
 
 :focus-visible {
-  outline: 2px solid var(--cyan-500);
+  outline: 2px solid var(--teal-400);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -171,8 +173,8 @@ p {
   top: -60px;
   z-index: 10001;
   padding: 0.7rem 1.1rem;
-  background: var(--cyan-500);
-  color: var(--navy-950);
+  background: var(--teal-400);
+  color: var(--charcoal-950);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
@@ -184,7 +186,7 @@ p {
 
 .skip-link:focus {
   top: 12px;
-  color: var(--navy-950);
+  color: var(--charcoal-950);
 }
 
 /* --------------------------------------------------------------------------
@@ -201,7 +203,7 @@ p {
 }
 
 .sect--tint {
-  background: linear-gradient(180deg, transparent, rgba(3, 13, 23, 0.55) 18%, rgba(3, 13, 23, 0.55) 82%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(10, 14, 13, 0.55) 18%, rgba(10, 14, 13, 0.55) 82%, transparent);
   border-block: 1px solid var(--line);
 }
 
@@ -217,11 +219,11 @@ p {
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  color: var(--cyan-500);
+  color: var(--teal-400);
   padding: 0.2rem 0.5rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xs);
-  background: rgba(22, 217, 232, 0.07);
+  background: rgba(106, 145, 150, 0.07);
 }
 
 .sect-label h2 {
@@ -244,34 +246,28 @@ p {
 }
 
 /* --------------------------------------------------------------------------
-   4. Cursor + circuit field canvases
+   4. Reference pointer canvas
+   --------------------------------------------------------------------------
+   A faithful port of ox.compsoc.net's hero_animation.js lives in
+   script.js (initField). The canvas paints its own background and then
+   draws 50 thick L-shaped traces, so it must sit behind the content and
+   must never intercept pointer events.
+
+   `opacity` is the only departure from the reference: the original colours
+   were mid-tone on navy, whereas off-white traces on charcoal would compete
+   with body copy. Dimming keeps the geometry, timing and easing intact.
    -------------------------------------------------------------------------- */
-#cc-field,
-#cc-cursor {
+#cc-field {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-#cc-field {
-  z-index: 0;
-  opacity: 0.85;
-}
-
-#cc-cursor {
-  z-index: 9998;
-}
-
-/* Native cursor is only hidden once the custom cursor is confirmed running. */
-.js.cc-cursor-on,
-.js.cc-cursor-on * {
-  cursor: none !important;
-}
-
-/* Content layers sit above the circuit field. The canvases themselves stay
-   at the bottom so the field reads as a background, not an overlay. */
+/* Content layers sit above the canvas. */
 main,
 #footer {
   position: relative;
@@ -287,7 +283,7 @@ main,
   z-index: 9999;
   display: grid;
   place-items: center;
-  background: radial-gradient(900px 600px at 50% 40%, var(--navy-850), var(--navy-950) 75%);
+  background: radial-gradient(900px 600px at 50% 40%, var(--charcoal-850), var(--charcoal-950) 75%);
   /* Failsafe: the overlay always clears itself, even if script.js never runs. */
   animation: loader-failsafe 1ms linear 2.6s forwards;
 }
@@ -322,7 +318,7 @@ main,
 }
 
 .loader-logo .bracket {
-  color: var(--cyan-500);
+  color: var(--teal-400);
   animation: bracket-pulse 1.6s var(--ease) infinite;
 }
 
@@ -352,7 +348,7 @@ main,
 .loader-bar-wrap {
   width: min(220px, 50vw);
   height: 3px;
-  background: rgba(84, 192, 204, 0.16);
+  background: rgba(44, 102, 110, 0.16);
   border-radius: 99px;
   overflow: hidden;
 }
@@ -394,7 +390,7 @@ main,
   width: 0;
   z-index: 9997;
   background: var(--gradient);
-  box-shadow: 0 0 12px rgba(22, 217, 232, 0.5);
+  box-shadow: 0 0 12px rgba(106, 145, 150, 0.5);
 }
 
 /* --------------------------------------------------------------------------
@@ -409,7 +405,7 @@ main,
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(5, 25, 43, 0.62);
+  background: rgba(17, 24, 23, 0.62);
   border-bottom: 1px solid transparent;
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
@@ -417,7 +413,7 @@ main,
 }
 
 #navbar.scrolled {
-  background: rgba(3, 13, 23, 0.88);
+  background: rgba(10, 14, 13, 0.88);
   border-bottom-color: var(--line);
 }
 
@@ -432,12 +428,13 @@ main,
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.65rem;
   color: var(--ink);
-  font-family: var(--font-display);
-  font-size: 1.22rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -448,12 +445,11 @@ main,
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 38px;
+  width: 42px;
   height: 38px;
-  padding: 3px;
-  background: var(--white);
   border-radius: var(--r-sm);
-  box-shadow: 0 0 0 1px rgba(22, 217, 232, 0.35), 0 8px 24px -12px rgba(22, 217, 232, 0.6);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(106, 145, 150, 0.35), 0 8px 24px -12px rgba(106, 145, 150, 0.6);
 }
 
 .brand-mark img {
@@ -464,10 +460,7 @@ main,
 
 .brand-name em {
   font-style: normal;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--teal-300);
 }
 
 .nav-links {
@@ -513,7 +506,7 @@ main,
 }
 
 .nav-link.active {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .hamburger {
@@ -558,7 +551,7 @@ main,
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(3, 13, 23, 0.86);
+  background: rgba(10, 14, 13, 0.86);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -566,6 +559,27 @@ main,
 
 .subnav .nav-inner {
   justify-content: space-between;
+}
+
+.subnav-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.subnav-brand {
+  display: inline-flex;
+  width: 29px;
+  height: 26px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(106, 145, 150, 0.35);
+}
+
+.subnav-brand img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .back-link {
@@ -581,7 +595,7 @@ main,
 }
 
 .back-link:hover {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .subnav-tag {
@@ -589,7 +603,7 @@ main,
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--cyan-400);
+  color: var(--teal-300);
   padding: 0.25rem 0.65rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-xs);
@@ -630,24 +644,26 @@ main,
 }
 
 .btn-accent {
-  --btn-bg: var(--gradient);
-  --btn-fg: #04121f;
+  --btn-bg: var(--teal-600);
+  --btn-fg: var(--off-white);
   --btn-bd: transparent;
-  box-shadow: 0 10px 30px -14px rgba(22, 217, 232, 0.8);
+  box-shadow: 0 10px 30px -14px rgba(44, 102, 110, 0.9);
 }
 
 .btn-accent:hover {
-  box-shadow: 0 16px 40px -14px rgba(22, 217, 232, 0.95);
+  --btn-bg: var(--teal-400);
+  --btn-fg: var(--charcoal-950);
+  box-shadow: 0 16px 40px -14px rgba(44, 102, 110, 0.95);
 }
 
 .btn-solid {
-  --btn-bg: rgba(22, 217, 232, 0.14);
-  --btn-fg: var(--cyan-400);
-  --btn-bd: rgba(22, 217, 232, 0.45);
+  --btn-bg: rgba(106, 145, 150, 0.14);
+  --btn-fg: var(--teal-300);
+  --btn-bd: rgba(106, 145, 150, 0.45);
 }
 
 .btn-solid:hover {
-  --btn-bg: rgba(22, 217, 232, 0.24);
+  --btn-bg: rgba(106, 145, 150, 0.24);
 }
 
 .btn-outline {
@@ -657,8 +673,8 @@ main,
 }
 
 .btn-outline:hover {
-  --btn-bd: var(--cyan-400);
-  --btn-bg: rgba(22, 217, 232, 0.08);
+  --btn-bd: var(--teal-300);
+  --btn-bg: rgba(106, 145, 150, 0.08);
 }
 
 .btn-sm {
@@ -677,7 +693,7 @@ main,
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  background: rgba(84, 192, 204, 0.08);
+  background: rgba(44, 102, 110, 0.08);
   border: 1px solid var(--line);
   border-radius: 99px;
   white-space: nowrap;
@@ -685,24 +701,24 @@ main,
 
 .pill i {
   font-size: 0.85em;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .pill--accent {
-  color: var(--navy-950);
-  background: var(--gradient);
+  color: var(--off-white);
+  background: var(--teal-600);
   border-color: transparent;
   font-weight: 600;
 }
 
 .pill--accent i {
-  color: var(--navy-950);
+  color: var(--off-white);
 }
 
 .pill--closed {
   color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(240, 237, 238, 0.04);
+  border-color: rgba(240, 237, 238, 0.14);
 }
 
 .pill--closed i {
@@ -728,7 +744,7 @@ main,
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(560px 420px at 22% 38%, rgba(22, 217, 232, 0.16), transparent 70%);
+  background: radial-gradient(560px 420px at 22% 38%, rgba(106, 145, 150, 0.16), transparent 70%);
   pointer-events: none;
 }
 
@@ -742,7 +758,7 @@ main,
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .hero-eyebrow::before {
@@ -780,7 +796,7 @@ main,
 }
 
 .hero-tagline .cursor {
-  color: var(--cyan-500);
+  color: var(--teal-400);
   animation: caret-blink 1s steps(2, start) infinite;
 }
 
@@ -839,18 +855,18 @@ main,
 .hero-badge {
   display: grid;
   place-items: center;
+  width: fit-content;
   margin: -0.2rem auto 1.2rem;
-  padding: 0.85rem 1.1rem;
-  background: var(--white);
   border-radius: var(--r);
+  overflow: hidden;
   box-shadow:
-    0 0 0 1px rgba(22, 217, 232, 0.4),
-    0 18px 40px -18px rgba(22, 217, 232, 0.55);
+    0 0 0 1px rgba(106, 145, 150, 0.4),
+    0 18px 40px -18px rgba(106, 145, 150, 0.55);
 }
 
 .hero-badge img {
   width: auto;
-  max-width: 132px;
+  max-width: 168px;
   height: auto;
 }
 
@@ -901,8 +917,8 @@ main,
   display: grid;
   place-items: center;
   font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-  color: var(--cyan-400);
-  background: rgba(22, 217, 232, 0.06);
+  color: var(--teal-300);
+  background: rgba(106, 145, 150, 0.06);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   transition: transform 0.28s var(--ease), color 0.28s var(--ease),
@@ -911,9 +927,9 @@ main,
 
 .stamp:hover {
   transform: translateY(-4px) rotate(-4deg);
-  color: var(--violet-400);
+  color: var(--off-white);
   border-color: var(--line-strong);
-  background: rgba(199, 125, 255, 0.1);
+  background: rgba(240, 237, 238, 0.1);
 }
 
 /* --------------------------------------------------------------------------
@@ -969,8 +985,8 @@ main,
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--cyan-400);
-  background: rgba(22, 217, 232, 0.07);
+  color: var(--teal-300);
+  background: rgba(106, 145, 150, 0.07);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
@@ -994,7 +1010,7 @@ main,
   font-size: 0.66rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--teal-500);
+  color: var(--teal-400);
 }
 
 .ticket-name {
@@ -1015,7 +1031,7 @@ main,
 }
 
 .ticket:hover .ticket-name a {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .ticket-meta {
@@ -1029,7 +1045,7 @@ main,
 }
 
 .ticket-meta i {
-  color: var(--cyan-500);
+  color: var(--teal-400);
   margin-right: 0.35rem;
 }
 
@@ -1060,9 +1076,9 @@ main,
 
 .polaroid {
   padding: 0.7rem 0.7rem 0.85rem;
-  background: rgba(233, 244, 251, 0.94);
+  background: rgba(240, 237, 238, 0.94);
   border-radius: var(--r-xs);
-  box-shadow: 0 18px 40px -20px rgba(2, 9, 16, 0.9);
+  box-shadow: 0 18px 40px -20px rgba(10, 14, 13, 0.9);
   transform: rotate(var(--tilt, -1.6deg));
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
@@ -1077,7 +1093,7 @@ main,
 
 .polaroid:hover {
   transform: rotate(0deg) translateY(-6px) scale(1.02);
-  box-shadow: 0 26px 56px -22px rgba(2, 9, 16, 0.95);
+  box-shadow: 0 26px 56px -22px rgba(10, 14, 13, 0.95);
 }
 
 .polaroid-frame {
@@ -1085,8 +1101,8 @@ main,
   display: grid;
   place-items: center;
   font-size: 2rem;
-  color: rgba(6, 43, 79, 0.42);
-  background: linear-gradient(135deg, rgba(6, 43, 79, 0.08), rgba(0, 175, 175, 0.12));
+  color: rgba(17, 24, 23, 0.42);
+  background: linear-gradient(135deg, rgba(17, 24, 23, 0.08), rgba(44, 102, 110, 0.12));
   border-radius: 2px;
   overflow: hidden;
 }
@@ -1111,7 +1127,7 @@ main,
   font-size: 0.66rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(6, 43, 79, 0.72);
+  color: rgba(17, 24, 23, 0.72);
   text-align: center;
 }
 
@@ -1136,7 +1152,7 @@ main,
 }
 
 .dir-head i {
-  color: var(--cyan-500);
+  color: var(--teal-400);
 }
 
 .dir-head .rule {
@@ -1179,7 +1195,7 @@ main,
   height: 52px;
   border-radius: 50%;
   overflow: hidden;
-  background: rgba(22, 217, 232, 0.1);
+  background: rgba(106, 145, 150, 0.1);
   border: 1px solid var(--line-strong);
 }
 
@@ -1212,17 +1228,17 @@ main,
   font-size: 0.64rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--cyan-400);
-  background: rgba(22, 217, 232, 0.1);
+  color: var(--teal-300);
+  background: rgba(106, 145, 150, 0.1);
   border: 1px solid var(--line);
   border-radius: 99px;
   text-align: right;
 }
 
 .dir-role.is-teacher {
-  color: var(--violet-400);
-  background: rgba(199, 125, 255, 0.12);
-  border-color: rgba(199, 125, 255, 0.3);
+  color: var(--off-white);
+  background: rgba(240, 237, 238, 0.12);
+  border-color: rgba(240, 237, 238, 0.3);
 }
 
 .dir-years {
@@ -1279,14 +1295,14 @@ main,
   font-family: var(--font-display);
   font-size: 8rem;
   line-height: 1;
-  color: rgba(22, 217, 232, 0.1);
+  color: rgba(106, 145, 150, 0.1);
   pointer-events: none;
 }
 
 .manifesto-card h3 {
   position: relative;
   font-size: 1.5rem;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .manifesto-card > p {
@@ -1311,7 +1327,7 @@ main,
 .check-list i {
   flex-shrink: 0;
   margin-top: 0.2em;
-  color: var(--teal-500);
+  color: var(--teal-400);
 }
 
 .values-row {
@@ -1338,7 +1354,7 @@ main,
 }
 
 .value-chip i {
-  color: var(--cyan-500);
+  color: var(--teal-400);
 }
 
 .value-chip:hover {
@@ -1375,7 +1391,7 @@ main,
 
 .contact-card i {
   font-size: 1.8rem;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .contact-card h3 {
@@ -1401,7 +1417,7 @@ main,
   padding: 3.2rem 0 2.4rem;
   margin-top: 2rem;
   border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, transparent, rgba(3, 13, 23, 0.75));
+  background: linear-gradient(180deg, transparent, rgba(10, 14, 13, 0.75));
 }
 
 .footer-inner {
@@ -1415,13 +1431,15 @@ main,
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
 .footer-brand .brand-mark {
-  width: 32px;
+  width: 36px;
   height: 32px;
 }
 
@@ -1451,7 +1469,7 @@ main,
 }
 
 .footer-socials a:hover {
-  color: var(--cyan-400);
+  color: var(--teal-300);
   border-color: var(--line-strong);
   transform: translateY(-3px);
 }
@@ -1475,7 +1493,7 @@ main,
   place-items: center;
   width: 46px;
   height: 46px;
-  color: var(--cyan-400);
+  color: var(--teal-300);
   background: var(--surface-solid);
   border: 1px solid var(--line-strong);
   border-radius: 50%;
@@ -1494,9 +1512,9 @@ main,
 }
 
 #back-to-top:hover {
-  color: var(--navy-950);
-  background: var(--cyan-500);
-  border-color: var(--cyan-500);
+  color: var(--charcoal-950);
+  background: var(--teal-400);
+  border-color: var(--teal-400);
 }
 
 /* --------------------------------------------------------------------------
@@ -1532,7 +1550,7 @@ main,
   font-family: var(--font-mono);
   font-size: clamp(0.85rem, 1.8vw, 1rem);
   letter-spacing: 0.06em;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .page-hero .desc {
@@ -1574,7 +1592,7 @@ main,
   flex-shrink: 0;
   margin-top: 0.15rem;
   font-size: 1.15rem;
-  color: var(--cyan-500);
+  color: var(--teal-400);
 }
 
 .tile-label {
@@ -1606,7 +1624,7 @@ main,
   bottom: 0.6rem;
   left: 5px;
   width: 1px;
-  background: linear-gradient(180deg, var(--cyan-500), var(--violet-400), transparent);
+  background: linear-gradient(180deg, var(--teal-400), var(--off-white), transparent);
 }
 
 .tl-item {
@@ -1625,8 +1643,8 @@ main,
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--navy-900);
-  border: 2px solid var(--cyan-500);
+  background: var(--charcoal-900);
+  border: 2px solid var(--teal-400);
 }
 
 .tl-date {
@@ -1634,7 +1652,7 @@ main,
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .tl-event {
@@ -1691,7 +1709,7 @@ main,
 }
 
 .accordion-head:hover {
-  background: rgba(22, 217, 232, 0.06);
+  background: rgba(106, 145, 150, 0.06);
 }
 
 .accordion-icon {
@@ -1701,8 +1719,8 @@ main,
   width: 42px;
   height: 42px;
   font-size: 1.05rem;
-  color: var(--cyan-400);
-  background: rgba(22, 217, 232, 0.1);
+  color: var(--teal-300);
+  background: rgba(106, 145, 150, 0.1);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
@@ -1734,7 +1752,7 @@ main,
 
 .accordion.active .accordion-toggle {
   transform: rotate(180deg);
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .accordion-body {
@@ -1777,7 +1795,7 @@ main,
 
 .fact {
   padding: 0.7rem 0.85rem;
-  background: rgba(3, 13, 23, 0.45);
+  background: rgba(10, 14, 13, 0.45);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
@@ -1793,7 +1811,7 @@ main,
 .fact-val {
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .theme-pills {
@@ -1807,8 +1825,8 @@ main,
   padding: 0.32rem 0.7rem;
   font-size: 0.78rem;
   color: var(--ink-dim);
-  background: rgba(199, 125, 255, 0.09);
-  border: 1px solid rgba(199, 125, 255, 0.26);
+  background: rgba(240, 237, 238, 0.09);
+  border: 1px solid rgba(240, 237, 238, 0.26);
   border-radius: 99px;
 }
 
@@ -1823,7 +1841,7 @@ main,
 }
 
 .awards-line i {
-  color: var(--violet-400);
+  color: var(--off-white);
 }
 
 /* --------------------------------------------------------------------------
@@ -1837,13 +1855,13 @@ main,
   padding: 0.7rem 0.9rem;
   font-size: 0.85rem;
   color: var(--ink-dim);
-  background: rgba(22, 217, 232, 0.07);
+  background: rgba(106, 145, 150, 0.07);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
 
 .info-bar i {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .tab-row {
@@ -1864,7 +1882,7 @@ main,
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--ink-dim);
-  background: rgba(3, 13, 23, 0.5);
+  background: rgba(10, 14, 13, 0.5);
   border: 1px solid var(--line);
   border-radius: 99px;
   cursor: pointer;
@@ -1888,7 +1906,7 @@ main,
 
 .tab.active,
 .tab-sm.active {
-  color: var(--navy-950);
+  color: var(--charcoal-950);
   background: var(--gradient);
   border-color: transparent;
   font-weight: 600;
@@ -1913,7 +1931,7 @@ main,
   display: grid;
   gap: 0.3rem;
   padding: 1rem 1.05rem;
-  background: rgba(3, 13, 23, 0.5);
+  background: rgba(10, 14, 13, 0.5);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   transition: transform 0.24s var(--ease), border-color 0.24s var(--ease);
@@ -1930,8 +1948,8 @@ main,
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.08em;
-  color: var(--cyan-400);
-  background: rgba(22, 217, 232, 0.1);
+  color: var(--teal-300);
+  background: rgba(106, 145, 150, 0.1);
   border: 1px solid var(--line);
   border-radius: var(--r-xs);
 }
@@ -1951,7 +1969,7 @@ main,
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.06em;
-  color: var(--violet-400);
+  color: var(--off-white);
 }
 
 .ps-desc {
@@ -1983,7 +2001,7 @@ main,
 .line-list li > i {
   flex-shrink: 0;
   margin-top: 0.2em;
-  color: var(--cyan-500);
+  color: var(--teal-400);
 }
 
 .line-list li strong {
@@ -1997,9 +2015,9 @@ main,
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.06em;
-  color: var(--violet-400);
-  background: rgba(199, 125, 255, 0.1);
-  border: 1px solid rgba(199, 125, 255, 0.26);
+  color: var(--off-white);
+  background: rgba(240, 237, 238, 0.1);
+  border: 1px solid rgba(240, 237, 238, 0.26);
   border-radius: var(--r-xs);
 }
 
@@ -2010,7 +2028,7 @@ main,
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 .sched-wrap {
@@ -2040,7 +2058,7 @@ main,
   letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  background: rgba(3, 13, 23, 0.5);
+  background: rgba(10, 14, 13, 0.5);
 }
 
 .sched-table tbody tr:last-child td {
@@ -2048,13 +2066,13 @@ main,
 }
 
 .sched-table tbody tr:hover {
-  background: rgba(22, 217, 232, 0.05);
+  background: rgba(106, 145, 150, 0.05);
 }
 
 .sched-table td:first-child {
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 /* --------------------------------------------------------------------------
@@ -2085,7 +2103,7 @@ main,
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--teal-500);
+  color: var(--teal-400);
 }
 
 .register-qr {
@@ -2097,7 +2115,7 @@ main,
   width: 148px;
   height: 148px;
   padding: 8px;
-  background: #fff;
+  background: var(--off-white);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-sm);
 }
@@ -2142,7 +2160,7 @@ main,
   height: 40px;
   margin-left: -10px;
   font-size: 1.05rem;
-  color: var(--cyan-400);
+  color: var(--teal-300);
   background: var(--surface-solid);
   border: 1px solid var(--line-strong);
   border-radius: 50%;
@@ -2161,33 +2179,18 @@ main,
 
 /* --------------------------------------------------------------------------
    21. Per-event accent themes
+   --------------------------------------------------------------------------
+   The palette is shared by every page, so the only per-event difference is
+   the accent rule under the page hero. Tech Tiranga keeps its tricolour:
+   the flag is the event's subject, not decoration.
    -------------------------------------------------------------------------- */
-.theme-tt {
-  --accent: #e2a13c;
-  --accent-2: #c2557a;
-  --accent-3: #d96b3f;
-}
-
 .theme-tt .page-hero::before {
   background: linear-gradient(90deg, #e2a13c 0 33%, #ffffff 33% 66%, #1f9e63 66% 100%);
 }
 
-.theme-epl {
-  --accent: #a78bfa;
-  --accent-2: #38bdf8;
-  --accent-3: #f472b6;
-}
-
-.theme-epl .page-hero::before {
-  background: linear-gradient(90deg, #a78bfa, #38bdf8 55%, #f472b6);
-}
-
-.theme-codecraze {
-  --accent: #16d9e8;
-}
-
+.theme-epl .page-hero::before,
 .theme-codecraze .page-hero::before {
-  background: linear-gradient(90deg, #16d9e8, #00afaf 50%, #c77dff);
+  background: var(--gradient);
 }
 
 /* --------------------------------------------------------------------------
@@ -2217,14 +2220,14 @@ main,
   padding: 0.95rem 1.2rem;
   font-size: 0.9rem;
   color: var(--ink);
-  background: rgba(22, 217, 232, 0.1);
+  background: rgba(106, 145, 150, 0.1);
   border: 1px solid var(--line-strong);
-  border-left: 3px solid var(--cyan-500);
+  border-left: 3px solid var(--teal-400);
   border-radius: var(--r-sm);
 }
 
 .noscript-note strong {
-  color: var(--cyan-400);
+  color: var(--teal-300);
 }
 
 /*
@@ -2300,7 +2303,7 @@ main,
     align-items: stretch;
     gap: 0.2rem;
     padding: 1rem 1.25rem 1.4rem;
-    background: rgba(3, 13, 23, 0.97);
+    background: rgba(10, 14, 13, 0.97);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -2346,6 +2349,20 @@ main,
 @media (max-width: 560px) {
   .wrap {
     width: min(100% - 1.75rem, var(--wrap));
+  }
+
+  /* The event name is already in the hero, so drop the duplicate tag and
+     give the logo + back link the full width instead of wrapping. */
+  .subnav-tag {
+    display: none;
+  }
+
+  .subnav-left {
+    gap: 0.6rem;
+  }
+
+  .back-link {
+    white-space: nowrap;
   }
 
   .hero h1 {
@@ -2422,15 +2439,12 @@ main,
     animation: none;
   }
 
-  #cc-field,
-  #cc-cursor {
-    display: none;
-  }
+  /* script.js draws a single static frame of the reference canvas when
+     reduced motion is requested — no loop, no pointer attraction. */
 }
 
 @media print {
   #cc-field,
-  #cc-cursor,
   #loader,
   #scroll-progress,
   #back-to-top,

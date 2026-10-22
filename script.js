@@ -8,16 +8,14 @@
  *  - Every module guards for missing elements, so the same file works on
  *    every page without throwing.
  *  - No inline event handlers and no globals: everything lives in this IIFE.
- *  - The custom cursor and the magnetic circuit field are progressive
- *    enhancements. They only activate for fine pointers and are skipped
- *    entirely when the visitor prefers reduced motion.
+ *  - The pointer-reactive canvas is a port of the Oxford CompSoc hero
+ *    animation. The native cursor is never hidden or replaced.
  */
 (function () {
   'use strict';
 
   var doc = document;
   var root = doc.documentElement;
-  var TAU = Math.PI * 2;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -35,14 +33,6 @@
     if (target) {
       target.addEventListener(type, handler, options);
     }
-  }
-
-  function clamp(value, min, max) {
-    return value < min ? min : value > max ? max : value;
-  }
-
-  function random(min, max) {
-    return min + Math.random() * (max - min);
   }
 
   /* ----------------------------------------------------------------- loader */
@@ -329,15 +319,38 @@
     });
   }
 
-  /* ----------------------------------------------------- magnetic circuit field */
+  /* --------------------------------------------------- reference pointer canvas */
   /**
-   * Adapted from the Oxford CompSoc hero animation: a scatter of nodes that
-   * are magnetically drawn towards the pointer while it is nearby, each
-   * trailing an orthogonal "circuit trace".
+   * Faithful port of https://ox.compsoc.net/'s hero_animation.js.
+   *
+   * Fifty points are scattered in normalised coordinates with a minimum
+   * spacing of 0.1 and rendered as thick orthogonal (L-shaped) traces. When
+   * the pointer is within max(width, height) / 8 of a point's home position,
+   * that point is pulled towards the pointer using a fixed 0.7 / 0.3 lerp and
+   * its trace stretches from the home position out to the animated position;
+   * when the pointer moves away the point springs back home. The canvas is
+   * repainted in full on every frame.
+   *
+   * Preserved exactly from the reference: point count (50), the spacing
+   * rejection loop, the random connection direction per point, the 12px home
+   * offset, the max(w, h) / 8 attraction radius, the 0.7 / 0.3 lerp, the
+   * 2-segment L geometry, the 6px stroke width, the full-canvas repaint and
+   * the per-frame (not delta-timed) requestAnimationFrame loop.
+   *
+   * Deliberate, documented changes:
+   *   - colours: charcoal base with a teal -> off-white gradient, per the
+   *     approved palette (the reference uses navy with teal/indigo/plum);
+   *   - the gradient is rebuilt on resize (the reference builds it once, so
+   *     its gradient stops pinning themselves after a window resize);
+   *   - reduced-motion and touch-only visitors get a single static frame
+   *     instead of a continuous loop;
+   *   - the reference's trailing "connMode highlight" pass is omitted: its
+   *     condition tests `window.width`, which is undefined, so the branch is
+   *     dead and nothing is ever filled.
    */
   function initField() {
     var canvas = doc.getElementById('cc-field');
-    if (!canvas || reduceMotion.matches) {
+    if (!canvas) {
       return;
     }
 
@@ -346,344 +359,117 @@
       return;
     }
 
-    var COUNT = 34;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var width = 0;
-    var height = 0;
+    var NUM_POINTS = 50;
+    var OFFSET = 12;
+    var LINE_WIDTH = 6;
+    var BASE = '#111817';
+    var STOPS = [
+      [0, '#2c666e'],
+      [0.5, '#2c666e'],
+      [1, '#f0edee']
+    ];
+
+    var points = [];
     var gradient = null;
-    var nodes = [];
-    var pointer = { x: -9999, y: -9999 };
+    var mouseX = 0;
+    var mouseY = 0;
     var running = false;
 
-    function buildNodes() {
-      nodes = [];
-      for (var i = 0; i < COUNT; i++) {
-        var x = Math.random();
-        var y = Math.random();
-        var valid = true;
-        for (var j = 0; j < nodes.length; j++) {
-          var dx = x - nodes[j].hx;
-          var dy = y - nodes[j].hy;
-          if (Math.sqrt(dx * dx + dy * dy) < 0.1) {
-            valid = false;
-            break;
-          }
-        }
-        if (valid) {
-          nodes.push({
-            hx: x,
-            hy: y,
-            x: x,
-            y: y,
-            mode: Math.random() < 0.5 ? 0 : 1,
-            arm: random(18, 34)
-          });
+    /* Scatter points, rejecting any that land within 0.1 of an existing one.
+       The loop keeps generating until 50 valid points exist, exactly like the
+       reference. */
+    while (points.length < NUM_POINTS) {
+      var x = Math.random();
+      var y = Math.random();
+      var valid = true;
+      for (var i = 0; i < points.length; i++) {
+        var dx = x - points[i].x;
+        var dy = y - points[i].y;
+        if (Math.sqrt(dx * dx + dy * dy) < 0.1) {
+          valid = false;
+          break;
         }
       }
-    }
-
-    function resize() {
-      width = canvas.clientWidth || window.innerWidth;
-      height = canvas.clientHeight || window.innerHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, '#00afaf');
-      gradient.addColorStop(0.5, '#5b4bc4');
-      gradient.addColorStop(1, '#c77dff');
-    }
-
-    function frame() {
-      ctx.clearRect(0, 0, width, height);
-
-      var radius = Math.max(width, height) / 8;
-
-      for (var i = 0; i < nodes.length; i++) {
-        var node = nodes[i];
-        var dx = pointer.x - node.x * width;
-        var dy = pointer.y - node.y * height;
-        var distance = Math.sqrt(dx * dx + dy * dy);
-
-        var targetX = node.hx * width;
-        var targetY = node.hy * height;
-
-        if (distance < radius) {
-          // Magnetic pull towards the pointer.
-          targetX = pointer.x;
-          targetY = pointer.y;
-        }
-
-        node.x += ((targetX / width) - node.x) * 0.1;
-        node.y += ((targetY / height) - node.y) * 0.1;
-
-        var px = node.x * width;
-        var py = node.y * height;
-
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 1;
-        ctx.globalAlpha = distance < radius ? 0.4 : 0.18;
-
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        if (node.mode) {
-          ctx.lineTo(px + node.arm, py);
-          ctx.lineTo(px + node.arm, py + node.arm);
-        } else {
-          ctx.lineTo(px, py + node.arm);
-          ctx.lineTo(px + node.arm, py + node.arm);
-        }
-        ctx.stroke();
-
-        ctx.globalAlpha = distance < radius ? 0.75 : 0.35;
-        ctx.fillStyle = '#54c0cc';
-        ctx.beginPath();
-        ctx.arc(px, py, 1.6, 0, TAU);
-        ctx.fill();
-      }
-
-      ctx.globalAlpha = 1;
-      running = true;
-      window.requestAnimationFrame(frame);
-    }
-
-    function start() {
-      if (running || reduceMotion.matches) {
-        return;
-      }
-      running = true;
-      window.requestAnimationFrame(frame);
-    }
-
-    buildNodes();
-    resize();
-
-    on(window, 'resize', function () {
-      resize();
-      buildNodes();
-    }, { passive: true });
-
-    on(window, 'pointermove', function (event) {
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-    }, { passive: true });
-
-    on(doc, 'visibilitychange', function () {
-      if (doc.hidden) {
-        running = false;
-      } else {
-        start();
-      }
-    });
-
-    start();
-  }
-
-  /* ---------------------------------------------------------- custom cursor */
-  /**
-   * A crisp cyan core with a tapering gradient trail, circuit vias along the
-   * trail, drifting teal/violet particles and a hover ring for interactive
-   * elements.
-   *
-   * Only enabled for fine pointers, and never when reduced motion is asked
-   * for — in both cases the native cursor is left untouched.
-   */
-  function initCursor() {
-    var canvas = doc.getElementById('cc-cursor');
-    if (!canvas || reduceMotion.matches || !finePointer.matches) {
-      return;
-    }
-
-    var ctx = canvas.getContext('2d');
-    if (!ctx) {
-      return;
-    }
-
-    var INTERACTIVE = [
-      'a',
-      'button',
-      'input',
-      'select',
-      'textarea',
-      'summary',
-      '[role="button"]',
-      '[role="tab"]',
-      '.btn',
-      '.pill',
-      '.ticket',
-      '.polaroid',
-      '.accordion-head',
-      '.tab',
-      '.tab-sm',
-      '.stamp',
-      '.dir-row',
-      '.contact-card',
-      '.value-chip',
-      '.ps-card',
-      '.tile',
-      '.team-icons i'
-    ].join(', ');
-
-    var TRAIL_MAX = 20;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var width = 0;
-    var height = 0;
-
-    var pointer = { x: -100, y: -100 };
-    var core = { x: -100, y: -100 };
-    var trail = [];
-    var particles = [];
-    var hovering = false;
-    var hoverAmount = 0;
-    var visible = false;
-    var running = false;
-    var lastX = -100;
-    var lastY = -100;
-
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function spawnParticles(x, y, dx, dy) {
-      var speed = Math.sqrt(dx * dx + dy * dy);
-      var count = Math.min(3, Math.floor(speed / 14));
-      for (var i = 0; i < count; i++) {
-        particles.push({
-          x: x + random(-3, 3),
-          y: y + random(-3, 3),
-          vx: dx * 0.16 + random(-0.5, 0.5),
-          vy: dy * 0.16 + random(-0.5, 0.5),
-          life: 1,
-          size: random(1.1, 2.6),
-          violet: Math.random() < 0.5
+      if (valid) {
+        points.push({
+          x: x,
+          y: y,
+          animX: x,
+          animY: y,
+          connMode: Math.random() < 0.5
         });
       }
-      if (particles.length > 90) {
-        particles.splice(0, particles.length - 90);
-      }
     }
 
-    function updateParticles() {
-      for (var i = particles.length - 1; i >= 0; i--) {
-        var p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.93;
-        p.vy *= 0.93;
-        p.life -= 0.022;
-        if (p.life <= 0) {
-          particles.splice(i, 1);
-        }
+    function resize() {
+      /* 1:1 with CSS pixels, as in the reference, so the 6px strokes keep
+         their reference weight rather than halfing on high-DPI screens. */
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+
+      ctx.lineWidth = LINE_WIDTH;
+
+      gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      for (var s = 0; s < STOPS.length; s++) {
+        gradient.addColorStop(STOPS[s][0], STOPS[s][1]);
       }
-    }
-
-    function drawTrail() {
-      var count = trail.length;
-      if (count < 2) {
-        return;
-      }
-
-      var head = trail[count - 1];
-      var tail = trail[0];
-      var gradient = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
-      gradient.addColorStop(0, 'rgba(199, 125, 255, 0)');
-      gradient.addColorStop(0.35, 'rgba(0, 175, 175, 0.28)');
-      gradient.addColorStop(0.75, 'rgba(22, 217, 232, 0.55)');
-      gradient.addColorStop(1, 'rgba(22, 217, 232, 0.9)');
-
+      ctx.fillStyle = gradient;
       ctx.strokeStyle = gradient;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-
-      for (var i = 1; i < count; i++) {
-        var t = i / (count - 1);
-        ctx.lineWidth = (0.6 + t * 6.2) * (1 + hoverAmount * 0.45);
-        ctx.beginPath();
-        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
-        ctx.lineTo(trail[i].x, trail[i].y);
-        ctx.stroke();
-      }
     }
 
-    function drawVias() {
-      ctx.strokeStyle = 'rgba(84, 192, 204, 0.32)';
-      ctx.lineWidth = 1;
-      for (var i = 5; i < trail.length; i += 5) {
-        var point = trail[i];
-        var length = 5 + (i / trail.length) * 9;
+    function draw() {
+      ctx.fillStyle = BASE;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = gradient;
+
+      var connectionRadius = Math.max(canvas.width, canvas.height) / 8;
+
+      for (var i = 0; i < points.length; i++) {
+        var point = points[i];
+        var fromX = point.x * canvas.width + OFFSET;
+        var fromY = point.y * canvas.height + OFFSET;
+
+        var mouseDx = mouseX - fromX;
+        var mouseDy = mouseY - fromY;
+        var mouseD = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+        var targetX = fromX;
+        var targetY = fromY;
+        if (mouseD < connectionRadius) {
+          targetX = mouseX;
+          targetY = mouseY;
+        }
+
+        point.animX = 0.7 * point.animX + 0.3 * targetX;
+        point.animY = 0.7 * point.animY + 0.3 * targetY;
+
+        var toX = point.animX;
+        var toY = point.animY;
+
+        var dx = toX - fromX;
+        var dy = toY - fromY;
+        var sx = Math.sign(dx);
+        var sy = Math.sign(dy);
+        var dmin = Math.min(Math.abs(dx), Math.abs(dy));
+
         ctx.beginPath();
-        ctx.moveTo(point.x, point.y);
-        ctx.lineTo(point.x + length, point.y);
-        ctx.lineTo(point.x + length, point.y + length);
+        if (point.connMode) {
+          /* L stretched from the home position towards the pointer. */
+          ctx.moveTo(fromX, fromY);
+          ctx.lineTo(fromX + dmin * sx, fromY + dmin * sy);
+          ctx.lineTo(fromX + dx, fromY + dy);
+        } else {
+          /* Mirror image: the L runs back from the animated position home. */
+          ctx.moveTo(toX, toY);
+          ctx.lineTo(toX - dmin * sx, toY - dmin * sy);
+          ctx.lineTo(toX - dx, toY - dy);
+        }
         ctx.stroke();
-
-        ctx.fillStyle = 'rgba(22, 217, 232, 0.6)';
-        ctx.fillRect(point.x - 1.6, point.y - 1.6, 3.2, 3.2);
       }
-    }
-
-    function drawParticles() {
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        ctx.globalAlpha = Math.max(0, p.life) * 0.75;
-        ctx.fillStyle = p.violet ? '#c77dff' : '#00afaf';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life, 0, TAU);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-    }
-
-    function drawCore() {
-      var glow = ctx.createRadialGradient(core.x, core.y, 0, core.x, core.y, 24);
-      glow.addColorStop(0, 'rgba(22, 217, 232, 0.4)');
-      glow.addColorStop(1, 'rgba(22, 217, 232, 0)');
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(core.x, core.y, 24, 0, TAU);
-      ctx.fill();
-
-      if (hoverAmount > 0.01) {
-        ctx.strokeStyle = 'rgba(22, 217, 232, ' + (0.8 * hoverAmount).toFixed(3) + ')';
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.arc(core.x, core.y, 7 + 13 * hoverAmount, 0, TAU);
-        ctx.stroke();
-      }
-
-      ctx.fillStyle = '#16d9e8';
-      ctx.strokeStyle = 'rgba(3, 13, 23, 0.55)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(core.x, core.y, Math.max(1.6, 3.6 - hoverAmount * 1.1), 0, TAU);
-      ctx.fill();
-      ctx.stroke();
     }
 
     function frame() {
-      ctx.clearRect(0, 0, width, height);
-
-      hoverAmount += ((hovering ? 1 : 0) - hoverAmount) * 0.16;
-
-      if (visible) {
-        core.x += (pointer.x - core.x) * 0.55;
-        core.y += (pointer.y - core.y) * 0.55;
-      }
-
-      updateParticles();
-      drawTrail();
-      drawVias();
-      drawParticles();
-      drawCore();
-
-      running = true;
+      draw();
       window.requestAnimationFrame(frame);
     }
 
@@ -692,58 +478,45 @@
         return;
       }
       running = true;
-      root.classList.add('cc-cursor-on');
       window.requestAnimationFrame(frame);
+    }
+
+    /* Park every point on its home position so a one-shot paint shows the
+       resting field rather than a slice of the intro sweep. */
+    function settle() {
+      for (var i = 0; i < points.length; i++) {
+        points[i].animX = points[i].x * canvas.width + OFFSET;
+        points[i].animY = points[i].y * canvas.height + OFFSET;
+      }
     }
 
     resize();
 
-    on(window, 'resize', resize, { passive: true });
-
-    on(window, 'pointermove', function (event) {
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-
-      if (!visible) {
-        visible = true;
-        core.x = pointer.x;
-        core.y = pointer.y;
-      }
-
-      var dx = pointer.x - lastX;
-      var dy = pointer.y - lastY;
-      lastX = pointer.x;
-      lastY = pointer.y;
-
-      var distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance > 1.2) {
-        trail.push({ x: pointer.x, y: pointer.y });
-        if (trail.length > TRAIL_MAX) {
-          trail.shift();
-        }
-        if (distance > 6) {
-          spawnParticles(pointer.x, pointer.y, dx, dy);
-        }
-      }
-
-      start();
+    on(window, 'mousemove', function (event) {
+      /* Same coordinate mapping as the reference: offset by the canvas box and
+         scale into the backing store. */
+      var rect = canvas.getBoundingClientRect();
+      mouseX = (event.clientX - rect.left) * (canvas.width / canvas.clientWidth);
+      mouseY = (event.clientY - rect.top) * (canvas.height / canvas.clientHeight);
     }, { passive: true });
 
-    on(doc, 'pointerover', function (event) {
-      var target = event.target;
-      hovering = !!(target && target.closest && target.closest(INTERACTIVE));
-    });
-
-    on(doc, 'pointerleave', function () {
-      visible = false;
-      trail.length = 0;
-    });
-
-    on(doc, 'visibilitychange', function () {
-      if (doc.hidden) {
-        visible = false;
+    on(window, 'resize', function () {
+      resize();
+      if (!running) {
+        settle();
+        draw();
       }
-    });
+    }, { passive: true });
+
+    if (reduceMotion.matches || !finePointer.matches) {
+      /* No animation requested, or no mouse to drive it: paint the field once
+         so the page still looks intentional, then stop. */
+      settle();
+      draw();
+      return;
+    }
+
+    start();
   }
 
   /* -------------------------------------------------------------- bootstrap */
@@ -757,7 +530,6 @@
     initAccordions();
     initTabs();
     initField();
-    initCursor();
   }
 
   if (doc.readyState === 'loading') {
