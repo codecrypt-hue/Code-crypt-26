@@ -1,19 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Code Crypt — Where Logic Meets Legend</title>
+  <meta name="description"
+    content="Code Crypt is the CSE Department technical club of Stanley College of Engineering for Women. Hackathons, tech fests, workshops and a community of builders." />
+
+  <!--
+    Content Security Policy.
+    Everything the site needs is served from this origin: scripts, styles,
+    fonts and images are all self-hosted, so no third-party origin is allowed.
+    `frame-ancestors` is intentionally absent: it is ignored in a <meta> CSP
+    and must be sent as a real response header (see deploy/_headers).
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'self'; frame-src 'none'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05192b" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" href="assets/img/codecrypt-mark.png" type="image/png" />
+
+  <!-- Progressive enhancement bootstrap: marks the document as JS-capable. -->
+  <script src="assets/js/init.js"></script>
+
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/vendor/font-awesome/fontawesome.css" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Background circuit field and the custom pointer cursor. Both are
+       decorative and are skipped on touch devices / reduced motion. -->
+  <canvas id="cc-field" aria-hidden="true"></canvas>
+  <canvas id="cc-cursor" aria-hidden="true"></canvas>
 
   <div id="loader">
     <div class="loader-inner">
@@ -25,39 +51,50 @@
     </div>
   </div>
 
-  <div id="scroll-progress"></div>
+  <div id="scroll-progress" aria-hidden="true"></div>
 
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Primary">
     <div class="nav-inner">
       <a href="#home" class="brand">
-        <span class="brand-mark">{ }</span>
+        <span class="brand-mark"><img src="assets/img/codecrypt-mark.png" alt="" width="172" height="154" /></span>
         <span class="brand-name">Code<em>Crypt</em></span>
       </a>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false"
+        aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+        <li><a href="#home" class="nav-link active" data-section="home" aria-current="true">Home</a></li>
         <li><a href="#events" class="nav-link" data-section="events">Events</a></li>
         <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
-        <li><a href="#members" class="nav-link" data-section="members">Members</a></li>
-        <li><a href="#vision" class="nav-link" data-section="vision">Vision &amp; Mission</a></li>
+        <li><a href="#members" class="nav-link" data-section="members">Team</a></li>
+        <li><a href="#vision" class="nav-link" data-section="vision">About</a></li>
         <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
-  <main>
+  <noscript>
+    <div class="noscript-note">
+      <strong>JavaScript is turned off.</strong>
+      Every section of this site is still readable — only the custom cursor, the scroll
+      animations and the collapsible panels need JavaScript to run.
+    </div>
+  </noscript>
+
+  <main id="main">
 
     <!-- ===== HOME ===== -->
     <section id="home" class="wrap hero">
       <div>
         <div class="hero-eyebrow reveal">Est. 2025 · CSE Department, Stanley College</div>
-        <h1 class="reveal">Code<br><em>Crypt</em></h1>
+        <h1 class="reveal">Code<br /><em>Crypt</em></h1>
         <p class="hero-tagline reveal"><span id="typewriter"></span><span class="cursor">|</span></p>
         <div class="hero-cta reveal">
-          <a href="#events" class="btn btn-accent"><i class="fa-solid fa-arrow-right"></i> Explore Events</a>
-          <a href="#members" class="btn btn-outline"><i class="fa-solid fa-users"></i> Meet the Team</a>
+          <a href="#events" class="btn btn-accent"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Explore
+            Events</a>
+          <a href="#members" class="btn btn-outline"><i class="fa-solid fa-users" aria-hidden="true"></i> Meet the
+            Team</a>
         </div>
         <div class="hero-stats reveal">
           <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Events Run</span></div>
@@ -66,16 +103,20 @@
         </div>
       </div>
       <div class="hero-panel reveal">
+        <div class="hero-badge">
+          <img src="assets/img/codecrypt-logo.png" alt="Code Crypt — CSE Department technical club" width="172"
+            height="192" decoding="async" fetchpriority="high" />
+        </div>
         <div class="hero-panel-head">Stack we speak</div>
         <div class="stamp-grid">
-          <div class="stamp"><i class="fa-brands fa-python"></i></div>
-          <div class="stamp"><i class="fa-brands fa-js"></i></div>
-          <div class="stamp"><i class="fa-solid fa-code"></i></div>
-          <div class="stamp"><i class="fa-solid fa-brain"></i></div>
-          <div class="stamp"><i class="fa-solid fa-lock"></i></div>
-          <div class="stamp"><i class="fa-solid fa-microchip"></i></div>
-          <div class="stamp"><i class="fa-brands fa-git-alt"></i></div>
-          <div class="stamp"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="stamp"><i class="fa-brands fa-python" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-brands fa-js" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-solid fa-code" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-solid fa-brain" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-solid fa-lock" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-brands fa-git-alt" aria-hidden="true"></i></div>
+          <div class="stamp"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
         </div>
       </div>
     </section>
@@ -88,96 +129,104 @@
 
         <div class="tickets reveal">
 
-          <div class="ticket" onclick="window.location.href='codecraze.html'">
+          <article class="ticket">
             <div class="ticket-idx">29<span class="idx-mon">AUG</span></div>
             <div class="ticket-body">
               <span class="ticket-tag">Gamified Mini-Hackathon</span>
-              <h3 class="ticket-name">CodeCraze</h3>
+              <h3 class="ticket-name"><a href="codecraze.html">CodeCraze</a></h3>
               <div class="ticket-meta">
-                <span><i class="fa-solid fa-calendar-days"></i> Aug 29, 2026 · 9:30 AM</span>
-                <span><i class="fa-solid fa-location-dot"></i> B-Block Seminar Hall</span>
+                <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Aug 29, 2026 · 9:30 AM</span>
+                <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> B-Block Seminar Hall</span>
               </div>
               <p class="ticket-desc">"Where Crazy Ideas Come to Life" — a fast-paced, gamified hackathon for teams of
                 2–5 across Semesters III, V &amp; VII. Get handed a trendy theme, pick your problem statement, and
                 race the clock to brainstorm, build, and present.</p>
             </div>
             <div class="ticket-actions">
-              <a href="codecraze.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"></i> Details</a>
-              <a href="https://forms.gle/vhYko4os3o6hY12L7" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="btn btn-solid btn-sm"><i class="fa-solid fa-ticket"></i> Register</a>
+              <a href="codecraze.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"
+                  aria-hidden="true"></i> Details</a>
+              <a href="https://forms.gle/vhYko4os3o6hY12L7" target="_blank" rel="noopener noreferrer" class="btn btn-solid btn-sm"><i
+                  class="fa-solid fa-ticket" aria-hidden="true"></i> Register</a>
             </div>
-          </div>
+          </article>
 
-          <div class="ticket" onclick="window.location.href='TT.html'">
+          <article class="ticket">
             <div class="ticket-idx">'26<span class="idx-mon">CSE</span></div>
             <div class="ticket-body">
               <span class="ticket-tag">Tech Fest · 3 Events</span>
-              <h3 class="ticket-name">Tech Tiranga</h3>
+              <h3 class="ticket-name"><a href="TT.html">Tech Tiranga</a></h3>
               <div class="ticket-meta">
-                <span><i class="fa-solid fa-calendar-days"></i> Date TBD</span>
-                <span><i class="fa-solid fa-location-dot"></i> B-Block Lab 1 &amp; 2</span>
+                <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Date TBD</span>
+                <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> B-Block Lab 1 &amp; 2</span>
               </div>
               <p class="ticket-desc">An Independence Day themed tech celebration under Code Crypt — featuring Tech
                 Canvas (poster presentation), Tech Quiz (Kahoot challenge), and Code Sketch (tech pictionary).
                 Encouraging technical knowledge, creativity, teamwork, and communication.</p>
             </div>
             <div class="ticket-actions">
-              <a href="TT.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"></i> Details</a>
+              <a href="TT.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"
+                  aria-hidden="true"></i> Details</a>
             </div>
-          </div>
+          </article>
 
-          <div class="ticket">
+          <article class="ticket">
             <div class="ticket-idx">23<span class="idx-mon">APR</span></div>
             <div class="ticket-body">
               <span class="ticket-tag">Project Expo · Python &amp; DBMS</span>
               <h3 class="ticket-name">Site Splash 2026</h3>
               <div class="ticket-meta">
-                <span><i class="fa-solid fa-calendar-days"></i> Apr 23, 2026</span>
-                <span><i class="fa-solid fa-location-dot"></i> Stanley College of Engineering</span>
+                <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Apr 23, 2026</span>
+                <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stanley College of Engineering</span>
               </div>
               <p class="ticket-desc">A Project Expo by CSE-B (2nd Year, 4th Semester) showcasing real-world
                 applications built with Python and DBMS — bridging theory with practical innovation.</p>
             </div>
             <div class="ticket-actions">
-              <span class="pill pill--closed"><i class="fa-solid fa-lock"></i> Registration Closed</span>
+              <span class="pill pill--closed"><i class="fa-solid fa-lock" aria-hidden="true"></i> Registration
+                Closed</span>
             </div>
-          </div>
+          </article>
 
-          <div class="ticket" onclick="window.location.href='epl.html'">
+          <article class="ticket">
             <div class="ticket-idx">15<span class="idx-mon">APR</span></div>
             <div class="ticket-body">
               <span class="ticket-tag">Hackathon · 4 Domains</span>
-              <h3 class="ticket-name">Engineers Prototyping League (EPL '26)</h3>
+              <h3 class="ticket-name"><a href="epl.html">Engineers Prototyping League (EPL '26)</a></h3>
               <div class="ticket-meta">
-                <span><i class="fa-solid fa-calendar-days"></i> Apr 2026 – Jun 2026</span>
-                <span><i class="fa-solid fa-location-dot"></i> Seminar Hall B</span>
+                <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Apr 2026 – Jun 2026</span>
+                <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Seminar Hall B</span>
               </div>
               <p class="ticket-desc">One Month to Build, One Day to Conquer. A month-long intensive tournament open
                 to all branches (1st–3rd years) building real projects across Fintech, Cybersecurity, Healthcare,
                 and EdTech tracks.</p>
             </div>
             <div class="ticket-actions">
-              <a href="epl.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"></i> Details</a>
-              <span onclick="event.stopPropagation()" class="pill pill--closed"><i class="fa-solid fa-lock"></i> Registration Closed</span>
+              <a href="epl.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-info"
+                  aria-hidden="true"></i> Details</a>
+              <span class="pill pill--closed"><i class="fa-solid fa-lock" aria-hidden="true"></i> Registration
+                Closed</span>
             </div>
-          </div>
+          </article>
 
-          <div class="ticket">
+          <article class="ticket">
             <div class="ticket-idx">7–14<span class="idx-mon">AUG</span></div>
             <div class="ticket-body">
               <span class="ticket-tag">Competition · Design &amp; Creativity</span>
               <h3 class="ticket-name">DesignDuel : Poster Making Competition</h3>
               <div class="ticket-meta">
-                <span><i class="fa-solid fa-users"></i> All CSE Sections</span>
-                <span><i class="fa-solid fa-location-dot"></i> Stanley College of Engineering</span>
+                <span><i class="fa-solid fa-users" aria-hidden="true"></i> All CSE Sections</span>
+                <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stanley College of
+                  Engineering</span>
               </div>
               <p class="ticket-desc">Code Crypt's first-ever class-wise poster making competition — blending
                 technical concepts with creative art. Class winners competed for the Grand Winner title, whose
                 poster became the Official Club Poster for 2026.</p>
             </div>
             <div class="ticket-actions">
-              <span class="pill pill--closed"><i class="fa-solid fa-lock"></i> Registration Closed</span>
+              <span class="pill pill--closed"><i class="fa-solid fa-lock" aria-hidden="true"></i> Registration
+                Closed</span>
             </div>
-          </div>
+          </article>
 
         </div>
       </div>
@@ -195,36 +244,69 @@
           real photos are ready. Sizing keeps working automatically.
         -->
         <div class="scrapbook reveal">
-          <div class="polaroid gi-wide"><div class="polaroid-frame"><i class="fa-solid fa-image"></i></div><div class="polaroid-cap">hero / event highlight</div></div>
-          <div class="polaroid"><div class="polaroid-frame"><i class="fa-solid fa-camera"></i></div><div class="polaroid-cap">photo slot</div></div>
-          <div class="polaroid gi-tall"><div class="polaroid-frame"><i class="fa-solid fa-image"></i></div><div class="polaroid-cap">portrait</div></div>
-          <div class="polaroid"><div class="polaroid-frame"><i class="fa-solid fa-camera"></i></div><div class="polaroid-cap">photo slot</div></div>
-          <div class="polaroid"><div class="polaroid-frame"><i class="fa-solid fa-camera"></i></div><div class="polaroid-cap">photo slot</div></div>
-          <div class="polaroid gi-wide"><div class="polaroid-frame"><i class="fa-solid fa-image"></i></div><div class="polaroid-cap">group / team</div></div>
-          <div class="polaroid"><div class="polaroid-frame"><i class="fa-solid fa-camera"></i></div><div class="polaroid-cap">photo slot</div></div>
-          <div class="polaroid"><div class="polaroid-frame"><i class="fa-solid fa-camera"></i></div><div class="polaroid-cap">photo slot</div></div>
+          <div class="polaroid gi-wide">
+            <div class="polaroid-frame"><i class="fa-solid fa-image" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">hero / event highlight</div>
+          </div>
+          <div class="polaroid">
+            <div class="polaroid-frame"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">photo slot</div>
+          </div>
+          <div class="polaroid gi-tall">
+            <div class="polaroid-frame"><i class="fa-solid fa-image" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">portrait</div>
+          </div>
+          <div class="polaroid">
+            <div class="polaroid-frame"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">photo slot</div>
+          </div>
+          <div class="polaroid">
+            <div class="polaroid-frame"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">photo slot</div>
+          </div>
+          <div class="polaroid gi-wide">
+            <div class="polaroid-frame"><i class="fa-solid fa-image" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">group / team</div>
+          </div>
+          <div class="polaroid">
+            <div class="polaroid-frame"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">photo slot</div>
+          </div>
+          <div class="polaroid">
+            <div class="polaroid-frame"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <div class="polaroid-cap">photo slot</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== MEMBERS ===== -->
+    <!-- ===== TEAM ===== -->
     <section id="members" class="sect">
       <div class="wrap">
-        <div class="sect-label reveal"><span class="num">03</span><h2>Members</h2><span class="rule"></span></div>
+        <div class="sect-label reveal"><span class="num">03</span><h2>Team</h2><span class="rule"></span></div>
         <p class="sect-sub reveal">The people who plan, build, and run Code Crypt.</p>
 
         <div class="dir-group reveal">
-          <div class="dir-head"><i class="fa-solid fa-chalkboard-user"></i> Teacher Coordinators<span class="rule"></span></div>
+          <div class="dir-head"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i> Teacher Coordinators<span
+              class="rule"></span></div>
           <div class="dir-list">
             <div class="dir-row">
-              <div class="dir-photo"><img src="ANISHA MA'AM.jpeg" alt="Dr. P.R. Anisha"></div>
-              <div><div class="dir-name">Dr. P.R. Anisha</div><div class="dir-dept">Professor, CSE Dept.</div></div>
+              <div class="dir-photo"><img src="anisha-maam.jpeg" alt="Dr. P.R. Anisha" width="537" height="596"
+                  loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Dr. P.R. Anisha</div>
+                <div class="dir-dept">Professor, CSE Dept.</div>
+              </div>
               <div class="dir-role is-teacher">Teacher Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="HAFSA IUA MA'AM.jpeg" alt="Ms. Hafsa Ihteshamuddin Ahmed"></div>
-              <div><div class="dir-name">Ms. Hafsa Ihteshamuddin Ahmed</div><div class="dir-dept">Asst. Professor, CSE Dept.</div></div>
+              <div class="dir-photo"><img src="hafsa-iua-maam.jpeg" alt="Ms. Hafsa Ihteshamuddin Ahmed" width="216"
+                  height="256" loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Ms. Hafsa Ihteshamuddin Ahmed</div>
+                <div class="dir-dept">Asst. Professor, CSE Dept.</div>
+              </div>
               <div class="dir-role is-teacher">Teacher Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
@@ -232,101 +314,166 @@
         </div>
 
         <div class="dir-group reveal">
-          <div class="dir-head"><i class="fa-solid fa-users"></i> Student Coordinators<span class="rule"></span></div>
+          <div class="dir-head"><i class="fa-solid fa-users" aria-hidden="true"></i> Student Coordinators<span
+              class="rule"></span></div>
           <div class="dir-list">
             <div class="dir-row">
-              <div class="dir-photo"><img src="1.jpeg" alt="Mudradi Pranavi"></div>
-              <div><div class="dir-name">Mudradi Pranavi</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="1.jpeg" alt="Mudradi Pranavi" width="719" height="1280" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Mudradi Pranavi</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">Senior Advisor</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="2.jpeg" alt="Shreeja Kadarla"></div>
-              <div><div class="dir-name">Shreeja Kadarla</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="2.jpeg" alt="Shreeja Kadarla" width="438" height="532" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Shreeja Kadarla</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">Deputy Advisor</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="3.jpeg" alt="Lalitya T"></div>
-              <div><div class="dir-name">Lalitya T</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="3.jpeg" alt="Lalitya T" width="358" height="477" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Lalitya T</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Event Head</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="azra.jpeg" alt="Azra Jabeen"></div>
-              <div><div class="dir-name">Azra Jabeen</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="azra.jpeg" alt="Azra Jabeen" width="900" height="900" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Azra Jabeen</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Event Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="15.jpeg" alt="Safa Fatima"></div>
-              <div><div class="dir-name">Safa Fatima</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="15.jpeg" alt="Safa Fatima" width="827" height="1063" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Safa Fatima</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Operational Head</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="16.jpeg" alt="Atikha Ahmed"></div>
-              <div><div class="dir-name">Atikha Ahmed</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="16.jpeg" alt="Atikha Ahmed" width="1460" height="1599" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Atikha Ahmed</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Operation Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="/8.jpeg" alt="Nitha Reddy"></div>
-              <div><div class="dir-name">Nitha Reddy</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="8.jpeg" alt="Nitha Reddy" width="1097" height="1280" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Nitha Reddy</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">SNS Head</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="7.jpeg" alt="Sanjana Vaddepally"></div>
-              <div><div class="dir-name">Sanjana Vaddepally</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="7.jpeg" alt="Sanjana Vaddepally" width="439" height="724"
+                  loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Sanjana Vaddepally</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Social Media Networking Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="5.jpeg" alt="Gandhari Likhitha"></div>
-              <div><div class="dir-name">Gandhari Likhitha</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="5.jpeg" alt="Gandhari Likhitha" width="963" height="1280" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Gandhari Likhitha</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">Marketing Coordinator</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="6.jpeg" alt="G.Rishitha Goud"></div>
-              <div><div class="dir-name">G.Rishitha Goud</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="6.jpeg" alt="G.Rishitha Goud" width="721" height="656" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">G.Rishitha Goud</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">Marketing Head</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="9.jpeg" alt="Mekalollu Nandika"></div>
-              <div><div class="dir-name">Mekalollu Nandika</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="9.jpeg" alt="Mekalollu Nandika" width="1080" height="1108" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Mekalollu Nandika</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Designing Co-ordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="/10.jpeg" alt="Vyshnavi Aluri"></div>
-              <div><div class="dir-name">Vyshnavi Aluri</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="10.jpeg" alt="Vyshnavi Aluri" width="394" height="414" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">Vyshnavi Aluri</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Marketing Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="11.jpeg" alt="Nagireddy Neha Reddy"></div>
-              <div><div class="dir-name">Nagireddy Neha Reddy</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="11.jpeg" alt="Nagireddy Neha Reddy" width="577" height="740"
+                  loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Nagireddy Neha Reddy</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">Functional Member</div>
               <div class="dir-years">2024–2028</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="12.jpeg" alt="B.Bhumika Singh"></div>
-              <div><div class="dir-name">B.Bhumika Singh</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="12.jpeg" alt="B.Bhumika Singh" width="529" height="537" loading="lazy"
+                  decoding="async" /></div>
+              <div>
+                <div class="dir-name">B.Bhumika Singh</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">Designing Head</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="13.jpeg" alt="Thiruvaipati Harini"></div>
-              <div><div class="dir-name">Thiruvaipati Harini</div><div class="dir-dept">3rd Year CSE</div></div>
+              <div class="dir-photo"><img src="13.jpeg" alt="Thiruvaipati Harini" width="1110" height="1600"
+                  loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Thiruvaipati Harini</div>
+                <div class="dir-dept">3rd Year CSE</div>
+              </div>
               <div class="dir-role">External Head</div>
               <div class="dir-years">2023–2027</div>
             </div>
             <div class="dir-row">
-              <div class="dir-photo"><img src="14.jpeg" alt="Gangidi Sai Sree Pradyugna Reddy"></div>
-              <div><div class="dir-name">Gangidi Sai Sree Pradyugna Reddy</div><div class="dir-dept">2nd Year CSE</div></div>
+              <div class="dir-photo"><img src="14.jpeg" alt="Gangidi Sai Sree Pradyugna Reddy" width="1223"
+                  height="1600" loading="lazy" decoding="async" /></div>
+              <div>
+                <div class="dir-name">Gangidi Sai Sree Pradyugna Reddy</div>
+                <div class="dir-dept">2nd Year CSE</div>
+              </div>
               <div class="dir-role">External Coordinator</div>
               <div class="dir-years">2024–2028</div>
             </div>
@@ -335,45 +482,54 @@
       </div>
     </section>
 
-    <!-- ===== VISION & MISSION ===== -->
+    <!-- ===== ABOUT / VISION & MISSION ===== -->
     <section id="vision" class="sect sect--tint">
       <div class="wrap">
-        <div class="sect-label reveal"><span class="num">04</span><h2>Vision &amp; Mission</h2><span class="rule"></span></div>
+        <div class="sect-label reveal"><span class="num">04</span><h2>About · Vision &amp; Mission</h2><span
+            class="rule"></span></div>
 
         <div class="manifesto">
+          <img class="manifesto-watermark" src="assets/img/codecrypt-watermark.png" alt="" aria-hidden="true"
+            width="172" height="154" loading="lazy" decoding="async" />
           <div class="manifesto-card reveal">
-            <div class="manifesto-quote">“</div>
+            <div class="manifesto-quote" aria-hidden="true">“</div>
             <h3>Our Vision</h3>
             <p>To build a generation of engineers who don't just write code — they think in systems, break
               boundaries, and architect the future. Code Crypt exists to transform curious students into confident
               technologists who lead, innovate, and inspire.</p>
             <ul class="check-list">
-              <li><i class="fa-solid fa-check-circle"></i> Foster a culture of curiosity and relentless learning</li>
-              <li><i class="fa-solid fa-check-circle"></i> Bridge the gap between academics and industry</li>
-              <li><i class="fa-solid fa-check-circle"></i> Make our campus a launchpad for tech innovators</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Foster a culture of curiosity and
+                relentless learning</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Bridge the gap between academics and
+                industry</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Make our campus a launchpad for tech
+                innovators</li>
             </ul>
           </div>
 
           <div class="manifesto-card reveal">
-            <div class="manifesto-quote">“</div>
+            <div class="manifesto-quote" aria-hidden="true">“</div>
             <h3>Our Mission</h3>
             <p>To create a vibrant, inclusive community where every student — from a first-year beginner to a
               final-year expert — can collaborate, compete, and grow. We do this through hands-on events,
               open-source culture, and mentorship from peers and professionals.</p>
             <ul class="check-list">
-              <li><i class="fa-solid fa-check-circle"></i> Organize impactful workshops, hackathons &amp; CTFs</li>
-              <li><i class="fa-solid fa-check-circle"></i> Mentor juniors through real-world project experience</li>
-              <li><i class="fa-solid fa-check-circle"></i> Connect members with alumni and industry partners</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Organize impactful workshops,
+                hackathons &amp; CTFs</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Mentor juniors through real-world
+                project experience</li>
+              <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Connect members with alumni and
+                industry partners</li>
             </ul>
           </div>
         </div>
 
         <div class="values-row reveal">
-          <div class="value-chip"><i class="fa-solid fa-bolt"></i> Innovation</div>
-          <div class="value-chip"><i class="fa-solid fa-handshake"></i> Collaboration</div>
-          <div class="value-chip"><i class="fa-solid fa-shield"></i> Integrity</div>
-          <div class="value-chip"><i class="fa-solid fa-seedling"></i> Growth</div>
-          <div class="value-chip"><i class="fa-solid fa-fire"></i> Passion</div>
+          <div class="value-chip"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Innovation</div>
+          <div class="value-chip"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Collaboration</div>
+          <div class="value-chip"><i class="fa-solid fa-shield" aria-hidden="true"></i> Integrity</div>
+          <div class="value-chip"><i class="fa-solid fa-seedling" aria-hidden="true"></i> Growth</div>
+          <div class="value-chip"><i class="fa-solid fa-fire" aria-hidden="true"></i> Passion</div>
         </div>
       </div>
     </section>
@@ -386,19 +542,19 @@
 
         <div class="contact-grid reveal">
           <div class="contact-card">
-            <i class="fa-solid fa-envelope"></i>
-            <h4>Email Us</h4>
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <h3>Email Us</h3>
             <a href="mailto:codecrypt@stanley.edu.in">codecrypt@stanley.edu.in</a>
           </div>
           <div class="contact-card">
-            <i class="fa-brands fa-linkedin-in"></i>
-            <h4>Connect on LinkedIn</h4>
-            <a href="https://www.linkedin.com/company/codecrypt-club-stlw/" target="_blank" rel="noopener">linkedin.com/codecrypt</a>
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            <h3>Connect on LinkedIn</h3>
+            <a href="https://www.linkedin.com/company/codecrypt-club-stlw/" target="_blank" rel="noopener noreferrer">linkedin.com/codecrypt</a>
           </div>
           <div class="contact-card">
-            <i class="fa-brands fa-instagram"></i>
-            <h4>Instagram</h4>
-            <a href="https://www.instagram.com/code_crypt_" target="_blank" rel="noopener">@codecrypt_cse</a>
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            <h3>Instagram</h3>
+            <a href="https://www.instagram.com/code_crypt_" target="_blank" rel="noopener noreferrer">@codecrypt_cse</a>
           </div>
         </div>
       </div>
@@ -409,20 +565,25 @@
   <footer id="footer">
     <div class="wrap footer-inner">
       <div class="footer-brand">
-        <span class="brand-mark">{ }</span>
+        <span class="brand-mark"><img src="assets/img/codecrypt-mark.png" alt="" width="172" height="154"
+            loading="lazy" decoding="async" /></span>
         <span class="brand-name">Code<em>Crypt</em></span>
       </div>
       <p class="footer-tagline">Decoding the future, one commit at a time.</p>
       <div class="footer-socials">
-        <a href="https://www.instagram.com/code_crypt_" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/company/codecrypt-club-stlw/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="mailto:codecrypt@stanley.edu.in"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.instagram.com/code_crypt_" target="_blank" rel="noopener noreferrer" aria-label="Code Crypt on Instagram"><i
+            class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/company/codecrypt-club-stlw/" target="_blank" rel="noopener noreferrer"
+          aria-label="Code Crypt on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        <a href="mailto:codecrypt@stanley.edu.in" aria-label="Email Code Crypt"><i class="fa-solid fa-envelope"
+            aria-hidden="true"></i></a>
       </div>
       <p class="footer-copy">&copy; 2025 Code Crypt · CSE Dept · All Rights Reserved</p>
     </div>
   </footer>
 
-  <button id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-chevron-up"></i></button>
+  <button id="back-to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-chevron-up"
+      aria-hidden="true"></i></button>
 
   <script src="script.js"></script>
 </body>

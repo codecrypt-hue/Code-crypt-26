@@ -1,199 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>CodeCraze — Where Crazy Ideas Come to Life | Code Crypt</title>
+  <meta name="description"
+    content="CodeCraze is Code Crypt's gamified mini-hackathon: teams of 2–5 across Semesters III, V and VII get a theme, pick a problem statement and race the clock to build." />
+
+  <!--
+    Content Security Policy — see index.html for the rationale.
+    `frame-ancestors` is ignored in a <meta> CSP and must be sent as a real
+    response header (see deploy/_headers).
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'self'; frame-src 'none'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05192b" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" href="assets/img/codecrypt-mark.png" type="image/png" />
+
+  <script src="assets/js/init.js"></script>
+
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/vendor/font-awesome/fontawesome.css" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    .register-band {
-      border: 2px solid var(--ink); border-radius: var(--radius); background: var(--paper-2);
-      box-shadow: var(--sticker); padding: 2rem; display: flex; align-items: center;
-      justify-content: space-between; gap: 1.6rem; flex-wrap: wrap;
-    }
-    .register-band h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; margin-bottom: .8rem; }
-    .register-band .eyebrow { font-family: var(--font-mono); font-size: .74rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .5rem; }
-    .register-qr { text-align: center; flex-shrink: 0; }
-    .register-qr img { width: 140px; height: 140px; border: 2px solid var(--ink); border-radius: var(--radius-sm); padding: 6px; background: #fff; }
-    .register-qr span { display: block; font-family: var(--font-mono); font-size: .66rem; color: var(--ink-soft); margin-top: .5rem; }
-    .team-band {
-      display: flex; align-items: center; gap: 1.4rem; border: 2px solid var(--ink); border-radius: var(--radius);
-      background: var(--paper-2); padding: 1.4rem 1.6rem; flex-wrap: wrap;
-    }
-    .team-band p { font-size: .92rem; flex: 1; min-width: 220px; }
-    .team-icons { display: flex; }
-    .team-icons i { font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--paper); border: 2px solid var(--ink); margin-left: -10px; color: var(--accent); }
-    .team-icons i:first-child { margin-left: 0; }
-    .no-pressure { text-align: center; font-size: .92rem; color: var(--ink-soft); margin-top: 1.6rem; }
-  </style>
 </head>
 
 <body class="theme-codecraze">
 
-  <nav class="subnav">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <canvas id="cc-field" aria-hidden="true"></canvas>
+  <canvas id="cc-cursor" aria-hidden="true"></canvas>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="subnav" aria-label="Breadcrumb">
     <div class="nav-inner">
-      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to CodeCrypt</a>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to
+        CodeCrypt</a>
       <span class="subnav-tag">CodeCraze</span>
     </div>
   </nav>
 
-  <div class="wrap">
-
-    <div class="page-hero">
-      <span class="pill pill--accent"><i class="fa-solid fa-bolt"></i> CodeCrypt Club Presents · Dept. of CSE</span>
-      <h1>CODECRAZE</h1>
-      <p class="tagline">Where Crazy Ideas Come to Life.</p>
-      <p class="desc">A different kind of hackathon where creativity meets technology. Get ready for a fast-paced,
-        gamified challenge full of unexpected themes, wild ideas, teamwork, and problem-solving.</p>
-      <div class="chips">
-        <span class="pill"><i class="fa-solid fa-calendar-days"></i> Sat, 29 Aug 2026</span>
-        <span class="pill"><i class="fa-solid fa-clock"></i> 9:30 AM – 12:30 PM</span>
-        <span class="pill"><i class="fa-solid fa-location-dot"></i> B-Block Seminar Hall</span>
-        <span class="pill"><i class="fa-solid fa-users"></i> Teams of 2–5</span>
-      </div>
+  <noscript>
+    <div class="noscript-note">
+      <strong>JavaScript is turned off.</strong>
+      All event details are readable below — the collapsible quest panels need JavaScript to open.
     </div>
+  </noscript>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">01</span><h2>Event Info</h2><span class="rule"></span></div>
-      <div class="tiles reveal">
-        <div class="tile"><i class="fa-solid fa-building-columns"></i><div><div class="tile-label">Organized By</div><div class="tile-value">CodeCrypt Club, Dept. of CSE</div></div></div>
-        <div class="tile"><i class="fa-solid fa-layer-group"></i><div><div class="tile-label">Format</div><div class="tile-value">Gamified mini-hackathon</div></div></div>
-        <div class="tile"><i class="fa-solid fa-graduation-cap"></i><div><div class="tile-label">Eligibility</div><div class="tile-value">Semesters III, V &amp; VII</div></div></div>
-        <div class="tile"><i class="fa-solid fa-people-group"></i><div><div class="tile-label">Team Size</div><div class="tile-value">2 – 5 members</div></div></div>
-        <div class="tile"><i class="fa-solid fa-location-dot"></i><div><div class="tile-label">Venue</div><div class="tile-value">B-Block Seminar Hall</div></div></div>
-        <div class="tile"><i class="fa-solid fa-calendar-check"></i><div><div class="tile-label">Date &amp; Time</div><div class="tile-value">29 Aug 2026 · 9:30–12:30</div></div></div>
-      </div>
-    </section>
+  <main id="main">
+    <div class="wrap">
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">02</span><h2>How It Works</h2><span class="rule"></span></div>
-      <div class="timeline reveal">
-        <div class="tl-item"><div class="tl-date">LEVEL 1</div><div class="tl-event">Get a Theme</div><div class="tl-desc">Every team is handed a trendy, unconventional theme at the start — no picking, no planning ahead. That's the fun part.</div></div>
-        <div class="tl-item"><div class="tl-date">LEVEL 2</div><div class="tl-event">Choose Your Problem Statement</div><div class="tl-desc">Based on your theme, lock in a problem statement that your team wants to tackle within the time limit.</div></div>
-        <div class="tl-item"><div class="tl-date">LEVEL 3</div><div class="tl-event">Brainstorm · Build · Present</div><div class="tl-desc">Race against the clock to ideate, build, and present — all within the 3-hour window. No intense rules, just momentum.</div></div>
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">03</span><h2>Choose Your Quest</h2><span class="rule"></span></div>
-      <p class="sect-sub reveal">Tap a theme to see sample problem statements — these are starting points, not the only options.</p>
-
-      <div class="accordion-list reveal">
-
-        <div class="accordion" id="q-rage">
-          <div class="accordion-head" onclick="toggleAcc('q-rage')">
-            <div class="accordion-icon"><i class="fa-solid fa-fire"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">The Rage-Bait Challenge</div><div class="accordion-tagline">Build a simple 1-page app that works, but makes basic interactions an absolute nightmare.</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <ul class="line-list">
-              <li><span><strong>Rage Meter</strong> — Create a system that assigns a Rage Score (0–100) to a piece of online content, based on factors like emotional language, provocation, exaggeration, and engagement-bait patterns.</span></li>
-              <li><span><strong>Petty Complaint Box</strong> — A platform where students post tiny everyday annoyances — AC not working, canteen out of samosas — and it auto-generates dramatic "official complaints."</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="accordion" id="q-fin">
-          <div class="accordion-head" onclick="toggleAcc('q-fin')">
-            <div class="accordion-icon"><i class="fa-solid fa-sack-dollar"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">FinDisaster</div><div class="accordion-tagline">Money problems, gamified and (kind of) solved.</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <ul class="line-list">
-              <li><span><strong>Broke Till Payday</strong> — An expense tracker for students that roasts bad spending habits instead of just showing boring graphs.</span></li>
-              <li><span><strong>Fake Rich Calculator</strong> — Enter your pocket money and it shows, in funny comparisons, how "rich" or "broke" you really are — e.g. "you can afford 3 momos and emotional damage."</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="accordion" id="q-campus">
-          <div class="accordion-head" onclick="toggleAcc('q-campus')">
-            <div class="accordion-icon"><i class="fa-solid fa-paw"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Campus Connect: Campus Life</div><div class="accordion-tagline">Fix the small chaos of everyday campus life.</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <ul class="line-list">
-              <li><span><strong>Campus Lost &amp; Found Detective</strong> — Matches lost-item reports with found-item reports using descriptions, images, locations, or semantic similarity.</span></li>
-              <li><span><strong>Club Event Radar</strong> — One place showing all club events happening on campus that week, so students stop missing them.</span></li>
-              <li><span><strong>Choose Your Own Adventure</strong> — A branching interactive story where every decision leads to increasingly chaotic consequences.</span></li>
-              <li><span><strong>Hostel Survival Simulator</strong> — A game/simulator where students try to survive hostel life.</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="accordion" id="q-ai">
-          <div class="accordion-head" onclick="toggleAcc('q-ai')">
-            <div class="accordion-icon"><i class="fa-solid fa-robot"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Quirky AI &amp; Wholesome Automation</div><div class="accordion-tagline">Automation with a personality, not a threat.</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <ul class="line-list">
-              <li><span><strong>What Should I Do First?</strong> — Uses deadlines, importance, effort, and dependencies to turn a chaotic task list into a sensible priority order.</span></li>
-              <li><span><strong>AI Excuse Generator</strong> — Generates funny, believable excuses for missed deadlines or classes — built as a joke tool, not for real misuse.</span></li>
-              <li><span><strong>Superhero LinkedIn</strong> — Heroes and villains create profiles, endorsements, achievements, and questionable career histories.</span></li>
-              <li><span><strong>Villain Dating App</strong> — Match supervillains based on evil compatibility.</span></li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">04</span><h2>Team Formation</h2><span class="rule"></span></div>
-      <div class="team-band reveal">
-        <div class="team-icons">
-          <i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i>
-        </div>
-        <p>Teams of <strong>2–5 members</strong>, with students from <strong>Semesters III, V &amp; VII</strong> — cross-semester teams are welcome and encouraged for fresh perspectives.</p>
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">05</span><h2>Register</h2><span class="rule"></span></div>
-      <div class="register-band reveal">
-        <div>
-          <div class="eyebrow">Insert Coin To Continue</div>
-          <h3>Scan or Tap to Register</h3>
-          <a class="btn btn-accent" href="https://forms.gle/vhYko4os3o6hY12L7" target="_blank" rel="noopener">Register Now <i class="fa-solid fa-arrow-right-long"></i></a>
-        </div>
-        <div class="register-qr">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://forms.gle/vhYko4os3o6hY12L7" alt="QR code to register for CodeCraze" />
-          <span>Scan to Register</span>
+      <div class="page-hero">
+        <span class="pill pill--accent"><i class="fa-solid fa-bolt" aria-hidden="true"></i> CodeCrypt Club Presents ·
+          Dept. of CSE</span>
+        <h1>CODECRAZE</h1>
+        <p class="tagline">Where Crazy Ideas Come to Life.</p>
+        <p class="desc">A different kind of hackathon where creativity meets technology. Get ready for a fast-paced,
+          gamified challenge full of unexpected themes, wild ideas, teamwork, and problem-solving.</p>
+        <div class="chips">
+          <span class="pill"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Sat, 29 Aug 2026</span>
+          <span class="pill"><i class="fa-solid fa-clock" aria-hidden="true"></i> 9:30 AM – 12:30 PM</span>
+          <span class="pill"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> B-Block Seminar Hall</span>
+          <span class="pill"><i class="fa-solid fa-users" aria-hidden="true"></i> Teams of 2–5</span>
         </div>
       </div>
-      <p class="no-pressure reveal">No pressure. No intense rules. Just <strong>ideas, teamwork, creativity</strong>, and a whole lot of tech.</p>
-    </section>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">06</span><h2>Coordinators</h2><span class="rule"></span></div>
-      <div class="tiles reveal" style="padding-bottom: 4rem;">
-        <div class="tile"><i class="fa-solid fa-users"></i><div><div class="tile-label">Club Coordinators</div><div class="tile-value">Safa Fatima<br>Lalitya Turlapati<br>Atikha Ahmed<br>Azra Jabeen</div></div></div>
-        <div class="tile"><i class="fa-solid fa-chalkboard-user"></i><div><div class="tile-label">Faculty Coordinators</div><div class="tile-value">Ms. Hafsa IUA<br>Mrs. R. Sirisha</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-tie"></i><div><div class="tile-label">HOD, CSE</div><div class="tile-value">Dr. R. Madana Mohana</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-graduate"></i><div><div class="tile-label">II Year Coordinator</div><div class="tile-value">Dr. Sumayya Afreen</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-graduate"></i><div><div class="tile-label">III Year Coordinator</div><div class="tile-value">Dr. M. Sowmya</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-graduate"></i><div><div class="tile-label">IV Year Coordinator</div><div class="tile-value">Dr. P. Narayana</div></div></div>
-        <div class="tile"><i class="fa-solid fa-clipboard-check"></i><div><div class="tile-label">Score Coordinator</div><div class="tile-value">Dr. D. Radhika</div></div></div>
-      </div>
-    </section>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">01</span><h2>Event Info</h2><span class="rule"></span></div>
+        <div class="tiles reveal">
+          <div class="tile"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><div><div class="tile-label">
+                Organized By</div><div class="tile-value">CodeCrypt Club, Dept. of CSE</div></div></div>
+          <div class="tile"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><div><div class="tile-label">
+                Format</div><div class="tile-value">Gamified mini-hackathon</div></div></div>
+          <div class="tile"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><div><div class="tile-label">
+                Eligibility</div><div class="tile-value">Semesters III, V &amp; VII</div></div></div>
+          <div class="tile"><i class="fa-solid fa-people-group" aria-hidden="true"></i><div><div class="tile-label">
+                Team Size</div><div class="tile-value">2 – 5 members</div></div></div>
+          <div class="tile"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><div><div class="tile-label">
+                Venue</div><div class="tile-value">B-Block Seminar Hall</div></div></div>
+          <div class="tile"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i><div><div class="tile-label">
+                Date &amp; Time</div><div class="tile-value">29 Aug 2026 · 9:30–12:30</div></div></div>
+        </div>
+      </section>
 
-  </div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">02</span><h2>How It Works</h2><span class="rule"></span></div>
+        <div class="timeline reveal">
+          <div class="tl-item">
+            <div class="tl-date">LEVEL 1</div>
+            <div class="tl-event">Get a Theme</div>
+            <div class="tl-desc">Every team is handed a trendy, unconventional theme at the start — no picking, no
+              planning ahead. That's the fun part.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">LEVEL 2</div>
+            <div class="tl-event">Choose Your Problem Statement</div>
+            <div class="tl-desc">Based on your theme, lock in a problem statement that your team wants to tackle
+              within the time limit.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">LEVEL 3</div>
+            <div class="tl-event">Brainstorm · Build · Present</div>
+            <div class="tl-desc">Race against the clock to ideate, build, and present — all within the 3-hour window.
+              No intense rules, just momentum.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">03</span><h2>Choose Your Quest</h2><span class="rule"></span></div>
+        <p class="sect-sub reveal">Tap a theme to see sample problem statements — these are starting points, not the
+          only options.</p>
+
+        <div class="accordion-list reveal">
+
+          <div class="accordion" id="q-rage">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="q-rage-body">
+                <span class="accordion-icon"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">The Rage-Bait Challenge</span><span
+                    class="accordion-tagline">Build a simple 1-page app that works, but makes basic interactions an
+                    absolute nightmare.</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="q-rage-body">
+              <ul class="line-list">
+                <li><span><strong>Rage Meter</strong> — Create a system that assigns a Rage Score (0–100) to a piece
+                  of online content, based on factors like emotional language, provocation, exaggeration, and
+                  engagement-bait patterns.</span></li>
+                <li><span><strong>Petty Complaint Box</strong> — A platform where students post tiny everyday
+                  annoyances — AC not working, canteen out of samosas — and it auto-generates dramatic "official
+                  complaints."</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion" id="q-fin">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="q-fin-body">
+                <span class="accordion-icon"><i class="fa-solid fa-sack-dollar" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">FinDisaster</span><span
+                    class="accordion-tagline">Money problems, gamified and (kind of) solved.</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="q-fin-body">
+              <ul class="line-list">
+                <li><span><strong>Broke Till Payday</strong> — An expense tracker for students that roasts bad
+                  spending habits instead of just showing boring graphs.</span></li>
+                <li><span><strong>Fake Rich Calculator</strong> — Enter your pocket money and it shows, in funny
+                  comparisons, how "rich" or "broke" you really are — e.g. "you can afford 3 momos and emotional
+                  damage."</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion" id="q-campus">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="q-campus-body">
+                <span class="accordion-icon"><i class="fa-solid fa-paw" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Campus Connect: Campus Life</span><span
+                    class="accordion-tagline">Fix the small chaos of everyday campus life.</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="q-campus-body">
+              <ul class="line-list">
+                <li><span><strong>Campus Lost &amp; Found Detective</strong> — Matches lost-item reports with
+                  found-item reports using descriptions, images, locations, or semantic similarity.</span></li>
+                <li><span><strong>Club Event Radar</strong> — One place showing all club events happening on campus
+                  that week, so students stop missing them.</span></li>
+                <li><span><strong>Choose Your Own Adventure</strong> — A branching interactive story where every
+                  decision leads to increasingly chaotic consequences.</span></li>
+                <li><span><strong>Hostel Survival Simulator</strong> — A game/simulator where students try to
+                  survive hostel life.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion" id="q-ai">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="q-ai-body">
+                <span class="accordion-icon"><i class="fa-solid fa-robot" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Quirky AI &amp; Wholesome Automation</span><span
+                    class="accordion-tagline">Automation with a personality, not a threat.</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="q-ai-body">
+              <ul class="line-list">
+                <li><span><strong>What Should I Do First?</strong> — Uses deadlines, importance, effort, and
+                  dependencies to turn a chaotic task list into a sensible priority order.</span></li>
+                <li><span><strong>AI Excuse Generator</strong> — Generates funny, believable excuses for missed
+                  deadlines or classes — built as a joke tool, not for real misuse.</span></li>
+                <li><span><strong>Superhero LinkedIn</strong> — Heroes and villains create profiles, endorsements,
+                  achievements, and questionable career histories.</span></li>
+                <li><span><strong>Villain Dating App</strong> — Match supervillains based on evil compatibility.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">04</span><h2>Team Formation</h2><span class="rule"></span></div>
+        <div class="team-band reveal">
+          <div class="team-icons" aria-hidden="true">
+            <i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i><i
+              class="fa-solid fa-user"></i><i class="fa-solid fa-user"></i>
+          </div>
+          <p>Teams of <strong>2–5 members</strong>, with students from <strong>Semesters III, V &amp; VII</strong> —
+            cross-semester teams are welcome and encouraged for fresh perspectives.</p>
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">05</span><h2>Register</h2><span class="rule"></span></div>
+        <div class="register-band reveal">
+          <div>
+            <div class="eyebrow">Insert Coin To Continue</div>
+            <h3>Scan or Tap to Register</h3>
+            <a class="btn btn-accent" href="https://forms.gle/vhYko4os3o6hY12L7" target="_blank"
+              rel="noopener noreferrer">Register Now <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></a>
+          </div>
+          <div class="register-qr">
+            <img src="assets/img/codecrypt-qr.svg" alt="QR code linking to the CodeCraze registration form" width="148"
+              height="148" loading="lazy" decoding="async" />
+            <span>Scan to Register</span>
+          </div>
+        </div>
+        <p class="no-pressure reveal">No pressure. No intense rules. Just <strong>ideas, teamwork, creativity</strong>,
+          and a whole lot of tech.</p>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">06</span><h2>Coordinators</h2><span class="rule"></span></div>
+        <div class="tiles reveal pb-4">
+          <div class="tile"><i class="fa-solid fa-users" aria-hidden="true"></i><div><div class="tile-label">Club
+                Coordinators</div><div class="tile-value">Safa Fatima<br>Lalitya Turlapati<br>Atikha Ahmed<br>Azra
+                Jabeen</div></div></div>
+          <div class="tile"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><div><div class="tile-label">
+                Faculty Coordinators</div><div class="tile-value">Ms. Hafsa IUA<br>Mrs. R. Sirisha</div></div></div>
+          <div class="tile"><i class="fa-solid fa-user-tie" aria-hidden="true"></i><div><div class="tile-label">HOD,
+                CSE</div><div class="tile-value">Dr. R. Madana Mohana</div></div></div>
+          <div class="tile"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><div><div class="tile-label">II
+                Year Coordinator</div><div class="tile-value">Dr. Sumayya Afreen</div></div></div>
+          <div class="tile"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><div><div class="tile-label">III
+                Year Coordinator</div><div class="tile-value">Dr. M. Sowmya</div></div></div>
+          <div class="tile"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><div><div class="tile-label">IV
+                Year Coordinator</div><div class="tile-value">Dr. P. Narayana</div></div></div>
+          <div class="tile"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><div><div class="tile-label">
+                Score Coordinator</div><div class="tile-value">Dr. D. Radhika</div></div></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
 
   <script src="script.js"></script>
-  <script>
-    function toggleAcc(id) { document.getElementById(id).classList.toggle('active'); }
-  </script>
 </body>
 
 </html>

@@ -1,0 +1,17 @@
+# SHA-384 integrity hashes for vendored third-party assets.
+# Regenerate with: python tools/vendor-assets.py
+#
+# Font Awesome 6.5.0 (free). Vendored because the 7.x free tier renames or drops 17 of the 60 icons this site uses; 6.5.0 is the version already in use.
+#
+sha384-a60251c27b0675a4785481c79e79128894a03192f503de2fb55758efc32ea8ff9a07f26e06c28a13e6b618c852e0c97e  assets/vendor/font-awesome/fa-brands-400.woff2
+sha384-b79a2c448c3938c71ec8bf05902cc8da88a523652c47af00ebe000e2afb0ee6b360bbf80e65106479f71070564c09a10  assets/vendor/font-awesome/fa-solid-900.woff2
+sha384-47ef7ec88f3cdb92ce0cfe1a08aef5fbc7a3d46e50bcbb9163385e743ef5c81d99f3e252a68a6db6e82dbc9646f09de0  assets/vendor/font-awesome/fontawesome.css
+sha384-cac957e65862a33c66b46bfaf3219aa6f8f6b3f836129fbdcde4a5e4c44d6f4150d3e7b297d0d2a6162b9ceef72df879  assets/vendor/fonts/archivo-400-latin-ext.woff2
+sha384-e2ef60075a301f88ab572a79b8b8ec1af3661d98b0b43de653c2f62b3043e5327340ac3ac8f34f3c9c31269266674060  assets/vendor/fonts/archivo-400-latin.woff2
+sha384-e2683d60c2de48ecaaa9a0c260ad8ef91a900b824112a850875397ff697e187203e38c571962de56499ceb025598bfbd  assets/vendor/fonts/fonts.css
+sha384-f8e01bff773b837c7c88e5d224bbd74185f64d5d00f76c170c0088b4a22cacd814a5a8a295a3d13a573410c0724bca98  assets/vendor/fonts/fraunces-600-latin-ext.woff2
+sha384-adde5cc6c07a835e8b405280cd1d04b987ee34d67588bb732b9c077f570b186fdf35666bbf5ad07ada7610938fb9177b  assets/vendor/fonts/fraunces-600-latin.woff2
+sha384-4ffa857e639e1a6cc3f6f05d375000d1955cf1a060847e5cabd307aac6e2a2c2965dc5837948dde7a5820a871e8e7538  assets/vendor/fonts/ibm-plex-mono-500-latin-ext.woff2
+sha384-2b0e8b21d593f6cd932fbe946e60fc746c726d253aa74a200f698ea1811c4248676dbb1347470ad88b36a55ca6f3e408  assets/vendor/fonts/ibm-plex-mono-500-latin.woff2
+sha384-e5106e2b7b3722de023395abcf48a997649804d110dc62e3d4bca2264fd3b97a7698802ba656ab206c88a04851e25c78  assets/vendor/fonts/ibm-plex-mono-600-latin-ext.woff2
+sha384-712110e2c08c612a32cf71f408133c36a9552369b21dbb46936bccfa6b660af7036013b9b2cb3b8f4359e4fcf0b93181  assets/vendor/fonts/ibm-plex-mono-600-latin.woff2

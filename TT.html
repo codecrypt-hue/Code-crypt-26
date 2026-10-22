@@ -1,194 +1,361 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Tech Tiranga — Independence Day Tech Fest | Code Crypt</title>
+  <meta name="description"
+    content="Tech Tiranga is Code Crypt's Independence Day tech fest: Tech Canvas (poster), Tech Trivia (Kahoot) and Code Sketch (tech pictionary) for III Semester CSE students." />
+
+  <!--
+    Content Security Policy — see index.html for the rationale.
+    `frame-ancestors` is ignored in a <meta> CSP and must be sent as a real
+    response header (see deploy/_headers).
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'self'; frame-src 'none'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05192b" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" href="assets/img/codecrypt-mark.png" type="image/png" />
+
+  <script src="assets/js/init.js"></script>
+
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/vendor/font-awesome/fontawesome.css" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    .page-hero::before { background: linear-gradient(90deg, #C7791E 0 33%, #FFFFFF 33% 66%, #1F6E43 66% 100%); }
-  </style>
 </head>
 
 <body class="theme-tt">
 
-  <nav class="subnav">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <canvas id="cc-field" aria-hidden="true"></canvas>
+  <canvas id="cc-cursor" aria-hidden="true"></canvas>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="subnav" aria-label="Breadcrumb">
     <div class="nav-inner">
-      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to CodeCrypt</a>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to
+        CodeCrypt</a>
       <span class="subnav-tag">Tech Tiranga</span>
     </div>
   </nav>
 
-  <div class="wrap">
-
-    <div class="page-hero">
-      <span class="pill pill--accent"><i class="fa-solid fa-flag"></i> Code Crypt Club · Department of CSE</span>
-      <h1>Tech Tiranga</h1>
-      <p class="tagline">Poster · Trivia · Pictionary — Celebrating Tech &amp; Independence</p>
-      <p class="desc">An Independence Day themed technical celebration featuring three exciting competitions —
-        encouraging technical knowledge, creativity, teamwork, and communication in a fun, engaging environment.</p>
-      <div class="chips">
-        <span class="pill"><i class="fa-solid fa-graduation-cap"></i> III Semester · CSE</span>
-        <span class="pill"><i class="fa-solid fa-users"></i> Class-wise</span>
-        <span class="pill"><i class="fa-solid fa-trophy"></i> Certificates &amp; Prizes</span>
-      </div>
+  <noscript>
+    <div class="noscript-note">
+      <strong>JavaScript is turned off.</strong>
+      All event details and schedules are readable below — the competition panels need JavaScript to expand.
     </div>
+  </noscript>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">01</span><h2>Event Details</h2><span class="rule"></span></div>
-      <div class="tiles reveal">
-        <div class="tile"><i class="fa-solid fa-building-columns"></i><div><div class="tile-label">Organized By</div><div class="tile-value">Dept. of CSE · Code Crypt Technical Club</div></div></div>
-        <div class="tile"><i class="fa-solid fa-chalkboard-user"></i><div><div class="tile-label">Faculty Coordinators</div><div class="tile-value">Ms. Hafsa Ihteshamuddin Ahmed · Mrs. R. Sirisha</div></div></div>
-        <div class="tile"><i class="fa-solid fa-location-dot"></i><div><div class="tile-label">Venue</div><div class="tile-value">Respective Classrooms</div></div></div>
-        <div class="tile"><i class="fa-solid fa-graduation-cap"></i><div><div class="tile-label">Eligibility</div><div class="tile-value">III Semester CSE Students (Class-wise)</div></div></div>
-        <div class="tile"><i class="fa-solid fa-layer-group"></i><div><div class="tile-label">Format</div><div class="tile-value">3 Competitions — Poster, Trivia &amp; Pictionary</div></div></div>
-        <div class="tile"><i class="fa-solid fa-calendar-days"></i><div><div class="tile-label">Dates</div><div class="tile-value">8 – 14 August 2026 (Class-wise)</div></div></div>
-      </div>
-    </section>
+  <main id="main">
+    <div class="wrap">
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">02</span><h2>Competition Schedule</h2><span class="rule"></span></div>
-
-      <p class="sched-caption reveal">Tech Trivia</p>
-      <div class="sched-wrap reveal">
-        <table class="sched-table">
-          <thead><tr><th>Class</th><th>Day</th><th>Date</th><th>Time</th></tr></thead>
-          <tbody>
-            <tr><td>CSE-A</td><td>Thursday</td><td>13/8/26</td><td>12:10 – 1:10</td></tr>
-            <tr><td>CSE-B</td><td>Saturday</td><td>8/8/26</td><td>10:00 – 11:00</td></tr>
-            <tr><td>CSE-C</td><td>Friday</td><td>14/8/26</td><td>11:10 – 12:10</td></tr>
-            <tr><td>CSE-D</td><td>Saturday</td><td>8/8/26</td><td>1:50 – 2:50</td></tr>
-            <tr><td>CSE-E</td><td>Tuesday</td><td>11/8/26</td><td>12:10 – 1:10</td></tr>
-            <tr><td>CSE-F</td><td>Friday</td><td>14/8/26</td><td>12:10 – 1:10</td></tr>
-          </tbody>
-        </table>
+      <div class="page-hero">
+        <span class="pill pill--accent"><i class="fa-solid fa-flag" aria-hidden="true"></i> Code Crypt Club · Department of
+          CSE</span>
+        <h1>Tech Tiranga</h1>
+        <p class="tagline">Poster · Trivia · Pictionary — Celebrating Tech &amp; Independence</p>
+        <p class="desc">An Independence Day themed technical celebration featuring three exciting competitions —
+          encouraging technical knowledge, creativity, teamwork, and communication in a fun, engaging environment.</p>
+        <div class="chips">
+          <span class="pill"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> III Semester · CSE</span>
+          <span class="pill"><i class="fa-solid fa-users" aria-hidden="true"></i> Class-wise</span>
+          <span class="pill"><i class="fa-solid fa-trophy" aria-hidden="true"></i> Certificates &amp; Prizes</span>
+        </div>
       </div>
 
-      <p class="sched-caption reveal">Code Sketch</p>
-      <div class="sched-wrap reveal">
-        <table class="sched-table">
-          <thead><tr><th>Class</th><th>Day</th><th>Date</th><th>Time</th></tr></thead>
-          <tbody>
-            <tr><td>CSE-A</td><td>Saturday</td><td>8/8/26</td><td>10:00 – 11:00</td></tr>
-            <tr><td>CSE-B</td><td>Friday</td><td>14/8/26</td><td>12:10 – 1:10</td></tr>
-            <tr><td>CSE-C</td><td>Wednesday</td><td>12/8/26</td><td>12:10 – 1:10</td></tr>
-            <tr><td>CSE-D</td><td>Tuesday</td><td>11/8/26</td><td>10:00 – 11:00</td></tr>
-            <tr><td>CSE-E</td><td>Tuesday</td><td>11/8/26</td><td>2:50 – 3:50</td></tr>
-            <tr><td>CSE-F</td><td>Saturday</td><td>8/8/26</td><td>1:50 – 2:50</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">01</span><h2>Event Details</h2><span class="rule"></span></div>
+        <div class="tiles reveal">
+          <div class="tile"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><div><div class="tile-label">
+                Organized By</div><div class="tile-value">Dept. of CSE · Code Crypt Technical Club</div></div></div>
+          <div class="tile"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><div><div class="tile-label">
+                Faculty Coordinators</div><div class="tile-value">Ms. Hafsa Ihteshamuddin Ahmed · Mrs. R. Sirisha</div>
+          </div></div>
+          <div class="tile"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><div><div class="tile-label">Venue
+                </div><div class="tile-value">Respective Classrooms</div></div></div>
+          <div class="tile"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><div><div class="tile-label">
+                Eligibility</div><div class="tile-value">III Semester CSE Students (Class-wise)</div></div></div>
+          <div class="tile"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><div><div class="tile-label">Format
+                </div><div class="tile-value">3 Competitions — Poster, Trivia &amp; Pictionary</div></div></div>
+          <div class="tile"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><div><div class="tile-label">Dates
+                </div><div class="tile-value">8 – 14 August 2026 (Class-wise)</div></div></div>
+        </div>
+      </section>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">03</span><h2>The Three Competitions</h2><span class="rule"></span></div>
-
-      <div class="accordion-list reveal">
-
-        <div class="accordion" id="acc-canvas">
-          <div class="accordion-head" onclick="toggleAcc('acc-canvas')">
-            <div class="accordion-icon"><i class="fa-solid fa-palette"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Tech Canvas</div><div class="accordion-tagline">"Design · Innovate · Inspire" — Poster Presentation · Online</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <p class="comp-desc">Participants design a creative and informative poster showcasing how technology
-              contributes to India's growth — innovation, cybersecurity, Digital India, AI, space technology,
-              sustainability, and national development. Posters are evaluated on creativity, technical relevance,
-              originality, visual appeal, and presentation.</p>
-            <div class="facts-grid">
-              <div class="fact"><div class="fact-label">Mode</div><div class="fact-val">Online</div></div>
-              <div class="fact"><div class="fact-label">Team Size</div><div class="fact-val">3 Members</div></div>
-              <div class="fact"><div class="fact-label">Eligibility</div><div class="fact-val">III Sem (Class-wise)</div></div>
-              <div class="fact"><div class="fact-label">Submission Deadline</div><div class="fact-val">TBD</div></div>
-            </div>
-            <div class="theme-pills">
-              <span class="theme-pill">Technology for a Developed India</span>
-              <span class="theme-pill">Digital India: Innovating for the Nation</span>
-              <span class="theme-pill">Technology &amp; Independence</span>
-            </div>
-            <div class="awards-line"><i class="fa-solid fa-medal"></i> 3 Winners · Certificates &amp; Prizes</div>
-          </div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">02</span><h2>Competition Schedule</h2><span class="rule"></span>
         </div>
 
-        <div class="accordion" id="acc-quiz">
-          <div class="accordion-head" onclick="toggleAcc('acc-quiz')">
-            <div class="accordion-icon"><i class="fa-solid fa-lightbulb"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Tech Trivia</div><div class="accordion-tagline">"Think Fast · Know More" — Kahoot Challenge</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <p class="comp-desc">A live technical quiz featuring questions on Computer Science fundamentals, emerging
-              technologies, India's achievements in science &amp; technology, famous innovators, cybersecurity, AI,
-              ISRO, Digital India, and Independence Day trivia.</p>
-            <div class="facts-grid">
-              <div class="fact"><div class="fact-label">Platform</div><div class="fact-val">Kahoot</div></div>
-              <div class="fact"><div class="fact-label">Eligibility</div><div class="fact-val">III Semester</div></div>
-              <div class="fact"><div class="fact-label">Format</div><div class="fact-val">Class-wise</div></div>
-            </div>
-            <div class="awards-line"><i class="fa-solid fa-medal"></i> 3 Winners · Certificates &amp; Prizes</div>
-          </div>
+        <p class="sched-caption reveal">Tech Trivia</p>
+        <div class="sched-wrap reveal">
+          <table class="sched-table">
+            <caption class="sr-only">Tech Trivia schedule by class</caption>
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Day</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CSE-A</td>
+                <td>Thursday</td>
+                <td>13/8/26</td>
+                <td>12:10 – 1:10</td>
+              </tr>
+              <tr>
+                <td>CSE-B</td>
+                <td>Saturday</td>
+                <td>8/8/26</td>
+                <td>10:00 – 11:00</td>
+              </tr>
+              <tr>
+                <td>CSE-C</td>
+                <td>Friday</td>
+                <td>14/8/26</td>
+                <td>11:10 – 12:10</td>
+              </tr>
+              <tr>
+                <td>CSE-D</td>
+                <td>Saturday</td>
+                <td>8/8/26</td>
+                <td>1:50 – 2:50</td>
+              </tr>
+              <tr>
+                <td>CSE-E</td>
+                <td>Tuesday</td>
+                <td>11/8/26</td>
+                <td>12:10 – 1:10</td>
+              </tr>
+              <tr>
+                <td>CSE-F</td>
+                <td>Friday</td>
+                <td>14/8/26</td>
+                <td>12:10 – 1:10</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="accordion" id="acc-sketch">
-          <div class="accordion-head" onclick="toggleAcc('acc-sketch')">
-            <div class="accordion-icon"><i class="fa-solid fa-pen-nib"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Code Sketch</div><div class="accordion-tagline">"Draw · Guess · Win" — Tech Pictionary</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body accordion-body-pad">
-            <p class="comp-desc">Teams guess technical terms based on drawings created by their teammates within a
-              limited time. Words include programming languages, computer hardware, software concepts, networking,
-              AI, cybersecurity, famous technologies, and Independence Day-themed technical concepts. The activity
-              promotes quick thinking, teamwork, technical vocabulary, and communication skills.</p>
-            <div class="facts-grid">
-              <div class="fact"><div class="fact-label">Eligibility</div><div class="fact-val">III Semester</div></div>
-              <div class="fact"><div class="fact-label">Format</div><div class="fact-val">Team-based</div></div>
-            </div>
-            <div class="awards-line"><i class="fa-solid fa-medal"></i> 3 Winners · Certificates &amp; Prizes</div>
-          </div>
+        <p class="sched-caption reveal">Code Sketch</p>
+        <div class="sched-wrap reveal">
+          <table class="sched-table">
+            <caption class="sr-only">Code Sketch schedule by class</caption>
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Day</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CSE-A</td>
+                <td>Saturday</td>
+                <td>8/8/26</td>
+                <td>10:00 – 11:00</td>
+              </tr>
+              <tr>
+                <td>CSE-B</td>
+                <td>Friday</td>
+                <td>14/8/26</td>
+                <td>12:10 – 1:10</td>
+              </tr>
+              <tr>
+                <td>CSE-C</td>
+                <td>Wednesday</td>
+                <td>12/8/26</td>
+                <td>12:10 – 1:10</td>
+              </tr>
+              <tr>
+                <td>CSE-D</td>
+                <td>Tuesday</td>
+                <td>11/8/26</td>
+                <td>10:00 – 11:00</td>
+              </tr>
+              <tr>
+                <td>CSE-E</td>
+                <td>Tuesday</td>
+                <td>11/8/26</td>
+                <td>2:50 – 3:50</td>
+              </tr>
+              <tr>
+                <td>CSE-F</td>
+                <td>Saturday</td>
+                <td>8/8/26</td>
+                <td>1:50 – 2:50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">03</span><h2>The Three Competitions</h2><span class="rule"></span>
         </div>
 
-      </div>
-    </section>
+        <div class="accordion-list reveal">
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">04</span><h2>Event Learning Outcomes</h2><span class="rule"></span></div>
-      <ul class="line-list reveal">
-        <li><i class="fa-solid fa-check-circle"></i><span>Develop technical knowledge by exploring and presenting engineering concepts through creative posters.</span><span class="sdg-tag">SDG 4</span></li>
-        <li><i class="fa-solid fa-check-circle"></i><span>Strengthen analytical thinking and problem-solving skills through participation in the technical quiz.</span><span class="sdg-tag">SDG 9</span></li>
-        <li><i class="fa-solid fa-check-circle"></i><span>Enhance communication, teamwork, and visual interpretation skills through the Pictionary competition.</span><span class="sdg-tag">SDG 17</span></li>
-        <li><i class="fa-solid fa-check-circle"></i><span>Improve creativity, confidence, and presentation abilities while expressing technical ideas effectively.</span><span class="sdg-tag">SDG 4</span></li>
-        <li><i class="fa-solid fa-check-circle"></i><span>Encourage active participation, healthy competition, and collaborative learning among students.</span><span class="sdg-tag">SDG 8</span></li>
-      </ul>
-    </section>
+          <div class="accordion" id="acc-canvas">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-canvas-body">
+                <span class="accordion-icon"><i class="fa-solid fa-palette" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Tech Canvas</span><span
+                    class="accordion-tagline">"Design · Innovate · Inspire" — Poster Presentation · Online</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="acc-canvas-body">
+              <p class="comp-desc">Participants design a creative and informative poster showcasing how technology
+                contributes to India's growth — innovation, cybersecurity, Digital India, AI, space technology,
+                sustainability, and national development. Posters are evaluated on creativity, technical relevance,
+                originality, visual appeal, and presentation.</p>
+              <div class="facts-grid">
+                <div class="fact">
+                  <div class="fact-label">Mode</div>
+                  <div class="fact-val">Online</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Team Size</div>
+                  <div class="fact-val">3 Members</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Eligibility</div>
+                  <div class="fact-val">III Sem (Class-wise)</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Submission Deadline</div>
+                  <div class="fact-val">TBD</div>
+                </div>
+              </div>
+              <div class="theme-pills">
+                <span class="theme-pill">Technology for a Developed India</span>
+                <span class="theme-pill">Digital India: Innovating for the Nation</span>
+                <span class="theme-pill">Technology &amp; Independence</span>
+              </div>
+              <div class="awards-line"><i class="fa-solid fa-medal" aria-hidden="true"></i> 3 Winners · Certificates &amp;
+                Prizes</div>
+            </div>
+          </div>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">05</span><h2>Coordinators</h2><span class="rule"></span></div>
-      <div class="tiles reveal" style="padding-bottom: 4rem;">
-        <div class="tile"><i class="fa-solid fa-chalkboard-user"></i><div><div class="tile-label">Faculty Coordinators</div><div class="tile-value">Ms. Hafsa Ihteshamuddin Ahmed<br>Mrs. R. Sirisha</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-tie"></i><div><div class="tile-label">Head of Department</div><div class="tile-value">Dr. R. Madana Mohana</div></div></div>
-        <div class="tile"><i class="fa-solid fa-users"></i><div><div class="tile-label">Student Coordinators</div><div class="tile-value">
-          Atikha Ahmed — <a href="tel:+917780794860">+91 77807 94860</a><br>
-          Azra Jabeen — <a href="tel:+917207111030">+91 72071 11030</a><br>
-          Lalitya Turlapati — <a href="tel:+919440053613">+91 94400 53613</a><br>
-          Safa Fatima — <a href="tel:+919032973204">+91 90329 73204</a>
-        </div></div></div>
-      </div>
-    </section>
+          <div class="accordion" id="acc-quiz">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-quiz-body">
+                <span class="accordion-icon"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Tech Trivia</span><span
+                    class="accordion-tagline">"Think Fast · Know More" — Kahoot Challenge</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="acc-quiz-body">
+              <p class="comp-desc">A live technical quiz featuring questions on Computer Science fundamentals, emerging
+                technologies, India's achievements in science &amp; technology, famous innovators, cybersecurity, AI,
+                ISRO, Digital India, and Independence Day trivia.</p>
+              <div class="facts-grid">
+                <div class="fact">
+                  <div class="fact-label">Platform</div>
+                  <div class="fact-val">Kahoot</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Eligibility</div>
+                  <div class="fact-val">III Semester</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Format</div>
+                  <div class="fact-val">Class-wise</div>
+                </div>
+              </div>
+              <div class="awards-line"><i class="fa-solid fa-medal" aria-hidden="true"></i> 3 Winners · Certificates &amp;
+                Prizes</div>
+            </div>
+          </div>
 
-  </div>
+          <div class="accordion" id="acc-sketch">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-sketch-body">
+                <span class="accordion-icon"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Code Sketch</span><span
+                    class="accordion-tagline">"Draw · Guess · Win" — Tech Pictionary</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body accordion-body-pad" id="acc-sketch-body">
+              <p class="comp-desc">Teams guess technical terms based on drawings created by their teammates within a
+                limited time. Words include programming languages, computer hardware, software concepts, networking,
+                AI, cybersecurity, famous technologies, and Independence Day-themed technical concepts. The activity
+                promotes quick thinking, teamwork, technical vocabulary, and communication skills.</p>
+              <div class="facts-grid">
+                <div class="fact">
+                  <div class="fact-label">Eligibility</div>
+                  <div class="fact-val">III Semester</div>
+                </div>
+                <div class="fact">
+                  <div class="fact-label">Format</div>
+                  <div class="fact-val">Team-based</div>
+                </div>
+              </div>
+              <div class="awards-line"><i class="fa-solid fa-medal" aria-hidden="true"></i> 3 Winners · Certificates &amp;
+                Prizes</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">04</span><h2>Event Learning Outcomes</h2><span class="rule"></span>
+        </div>
+        <ul class="line-list reveal">
+          <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i><span>Develop technical knowledge by exploring
+              and presenting engineering concepts through creative posters.</span><span class="sdg-tag">SDG 4</span></li>
+          <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i><span>Strengthen analytical thinking and
+              problem-solving skills through participation in the technical quiz.</span><span class="sdg-tag">SDG 9</span>
+          </li>
+          <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i><span>Enhance communication, teamwork, and visual
+              interpretation skills through the Pictionary competition.</span><span class="sdg-tag">SDG 17</span></li>
+          <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i><span>Improve creativity, confidence, and
+              presentation abilities while expressing technical ideas effectively.</span><span class="sdg-tag">SDG 4</span>
+          </li>
+          <li><i class="fa-solid fa-check-circle" aria-hidden="true"></i><span>Encourage active participation, healthy
+              competition, and collaborative learning among students.</span><span class="sdg-tag">SDG 8</span></li>
+        </ul>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">05</span><h2>Coordinators</h2><span class="rule"></span></div>
+        <div class="tiles reveal pb-4">
+          <div class="tile"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><div><div class="tile-label">
+                Faculty Coordinators</div><div class="tile-value">Ms. Hafsa Ihteshamuddin Ahmed<br>Mrs. R. Sirisha</div>
+          </div></div>
+          <div class="tile"><i class="fa-solid fa-user-tie" aria-hidden="true"></i><div><div class="tile-label">Head of
+                Department</div><div class="tile-value">Dr. R. Madana Mohana</div></div></div>
+          <div class="tile"><i class="fa-solid fa-users" aria-hidden="true"></i><div><div class="tile-label">Student
+                Coordinators</div><div class="tile-value">
+                Atikha Ahmed<br>
+                Azra Jabeen<br>
+                Lalitya Turlapati<br>
+                Safa Fatima
+              </div></div></div>
+          <div class="tile"><i class="fa-solid fa-envelope" aria-hidden="true"></i><div><div class="tile-label">Club
+                Contact</div><div class="tile-value"><a href="mailto:codecrypt@stanley.edu.in">codecrypt@stanley.edu.in</a><br>Code
+                Crypt, Dept. of CSE</div></div></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
 
   <script src="script.js"></script>
-  <script>
-    function toggleAcc(id) { document.getElementById(id).classList.toggle('active'); }
-  </script>
 </body>
 
 </html>

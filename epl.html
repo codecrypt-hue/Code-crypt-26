@@ -1,373 +1,636 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>EPL '26 — Engineers Prototyping League | Code Crypt</title>
+  <meta name="description"
+    content="Engineers Prototyping League (EPL '26): a month-long hackathon by Code Crypt in association with ACM-W, across Fintech, Cybersecurity, Healthcare and EdTech tracks." />
+
+  <!--
+    Content Security Policy — see index.html for the rationale.
+    `frame-ancestors` is ignored in a <meta> CSP and must be sent as a real
+    response header (see deploy/_headers).
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'self'; frame-src 'none'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05192b" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" href="assets/img/codecrypt-mark.png" type="image/png" />
+
+  <script src="assets/js/init.js"></script>
+
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/vendor/font-awesome/fontawesome.css" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body class="theme-epl">
 
-  <nav class="subnav">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <canvas id="cc-field" aria-hidden="true"></canvas>
+  <canvas id="cc-cursor" aria-hidden="true"></canvas>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="subnav" aria-label="Breadcrumb">
     <div class="nav-inner">
-      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to CodeCrypt</a>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to
+        CodeCrypt</a>
       <span class="subnav-tag">EPL '26</span>
     </div>
   </nav>
 
-  <div class="wrap">
-
-    <div class="page-hero">
-      <span class="pill pill--accent"><i class="fa-solid fa-shield-halved"></i> Code Crypt Club · in association with ACM-W</span>
-      <h1>Engineers Prototyping League</h1>
-      <p class="tagline">One Month to Build · 4 Domains · One Day to Conquer</p>
-      <p class="desc">Registration for EPL '26 is now closed.</p>
-      <span class="pill pill--closed"><i class="fa-solid fa-lock"></i> Registration Closed</span>
+  <noscript>
+    <div class="noscript-note">
+      <strong>JavaScript is turned off.</strong>
+      All rules, schedules and problem statements are readable below — the domain panels need JavaScript to expand.
     </div>
+  </noscript>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">01</span><h2>Tournament Rules</h2><span class="rule"></span></div>
-      <div class="tiles reveal">
-        <div class="tile"><i class="fa-solid fa-clock"></i><div><div class="tile-label">Duration</div><div class="tile-value">One Month</div></div></div>
-        <div class="tile"><i class="fa-solid fa-graduation-cap"></i><div><div class="tile-label">Eligibility</div><div class="tile-value">BE students of all branches, any year</div></div></div>
-        <div class="tile"><i class="fa-solid fa-layer-group"></i><div><div class="tile-label">Tracks</div><div class="tile-value">Junior: 1st Year&nbsp; |&nbsp; Senior: 2nd &amp; 3rd Year</div></div></div>
-        <div class="tile"><i class="fa-solid fa-users"></i><div><div class="tile-label">Team Size</div><div class="tile-value">2 – 4 Members</div></div></div>
-        <div class="tile"><i class="fa-solid fa-trophy"></i><div><div class="tile-label">Award</div><div class="tile-value">MVP (Most Valuable Programming Team) per domain</div></div></div>
-        <div class="tile"><i class="fa-solid fa-file-code"></i><div><div class="tile-label">Requirements</div><div class="tile-value">Working Model + Documentation + GitHub Link</div></div></div>
+  <main id="main">
+    <div class="wrap">
+
+      <div class="page-hero">
+        <span class="pill pill--accent"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Code Crypt Club · in
+          association with ACM-W</span>
+        <h1>Engineers Prototyping League</h1>
+        <p class="tagline">One Month to Build · 4 Domains · One Day to Conquer</p>
+        <p class="desc">Registration for EPL '26 is now closed.</p>
+        <span class="pill pill--closed"><i class="fa-solid fa-lock" aria-hidden="true"></i> Registration Closed</span>
       </div>
-    </section>
 
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">02</span><h2>Problem Statements &amp; Domains</h2><span class="rule"></span></div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">01</span><h2>Tournament Rules</h2><span class="rule"></span></div>
+        <div class="tiles reveal">
+          <div class="tile"><i class="fa-solid fa-clock" aria-hidden="true"></i><div><div class="tile-label">Duration
+              </div><div class="tile-value">One Month</div></div></div>
+          <div class="tile"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><div><div class="tile-label">
+                Eligibility</div><div class="tile-value">BE students of all branches, any year</div></div></div>
+          <div class="tile"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><div><div class="tile-label">Tracks
+              </div><div class="tile-value">Junior: 1st Year&nbsp; |&nbsp; Senior: 2nd &amp; 3rd Year</div></div></div>
+          <div class="tile"><i class="fa-solid fa-users" aria-hidden="true"></i><div><div class="tile-label">Team Size
+              </div><div class="tile-value">2 – 4 Members</div></div></div>
+          <div class="tile"><i class="fa-solid fa-trophy" aria-hidden="true"></i><div><div class="tile-label">Award
+              </div><div class="tile-value">MVP (Most Valuable Programming Team) per domain</div></div></div>
+          <div class="tile"><i class="fa-solid fa-file-code" aria-hidden="true"></i><div><div class="tile-label">
+                Requirements</div><div class="tile-value">Working Model + Documentation + GitHub Link</div></div></div>
+        </div>
+      </section>
 
-      <div class="accordion-list reveal">
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">02</span><h2>Problem Statements &amp; Domains</h2><span
+            class="rule"></span></div>
 
-        <!-- FINTECH FALCONS -->
-        <div class="accordion" id="acc-fintech">
-          <div class="accordion-head" onclick="toggleAcc('acc-fintech')">
-            <div class="accordion-icon"><i class="fa-solid fa-coins"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Fintech Falcons</div><div class="accordion-tagline">"Speed &amp; Precision" — Finance</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
+        <div class="accordion-list reveal">
+
+          <!-- FINTECH FALCONS -->
+          <div class="accordion" id="acc-fintech">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-fintech-body">
+                <span class="accordion-icon"><i class="fa-solid fa-coins" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Fintech Falcons</span><span
+                    class="accordion-tagline">"Speed &amp; Precision" — Finance</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body" id="acc-fintech-body">
+              <div class="info-bar"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Select your year track,
+                then choose Hardware or Software — each card is a valid problem statement.</div>
+              <div class="tab-row" role="tablist" aria-label="Fintech Falcons year track">
+                <button class="tab active" type="button" role="tab" aria-selected="true" aria-controls="fintech-junior"
+                  data-tab-panel="fintech-junior">Junior (1st Year)</button>
+                <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="fintech-senior"
+                  data-tab-panel="fintech-senior" tabindex="-1">Senior (2nd/3rd Year)</button>
+              </div>
+
+              <div class="tab-panel active" id="fintech-junior" role="tabpanel" aria-label="Fintech Falcons junior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Fintech Falcons junior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="fintech-junior-hw" data-tab-panel="fintech-junior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="fintech-junior-sw" data-tab-panel="fintech-junior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="fintech-junior-hw" role="tabpanel"
+                  aria-label="Fintech Falcons junior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">FF-01-H1</span><div class="ps-text">Digital Keypad Savings
+                        Box</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Unlocks with a 4-digit code on a 4×4
+                        Matrix Keypad</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-H2</span><div class="ps-text">Smart Coin Counter
+                        </div><span class="ps-sdg">SDG 8</span><div class="ps-desc">IR sensor counts and totals coin value
+                        on display</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-H3</span><div class="ps-text">RFID-Based "Pocket
+                        Money" Card</div><span class="ps-sdg">SDG 8, 9</span><div class="ps-desc">Reads tag and shows
+                        balance on LCD</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="fintech-junior-sw" role="tabpanel"
+                      aria-label="Fintech Falcons junior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">FF-01-S1</span><div class="ps-text">Smart Expense Tracker
+                        &amp; Budget Planner</div><span class="ps-sdg">SDG 12</span><div class="ps-desc">Visual charts
+                        and budget alerts</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-S2</span><div class="ps-text">Personalized Fixed
+                        Deposit (FD) Calculator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Compares bank
+                        interest rates side by side</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-S3</span><div class="ps-text">Basic Stock Market
+                        Learning Simulator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Virtual currency for
+                        risk-free trading practice</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-S4</span><div class="ps-text">Group Expense
+                        Splitter (Split-Bill)</div><span class="ps-sdg">SDG 17</span><div class="ps-desc">Calculates and
+                        tracks shared costs among groups</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-01-S5</span><div class="ps-text">Automated Invoice
+                        Generator for Small Businesses</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Generates
+                        professional PDF invoices automatically</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-panel" id="fintech-senior" role="tabpanel" aria-label="Fintech Falcons senior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Fintech Falcons senior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="fintech-senior-hw" data-tab-panel="fintech-senior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="fintech-senior-sw" data-tab-panel="fintech-senior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="fintech-senior-hw" role="tabpanel"
+                  aria-label="Fintech Falcons senior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">FF-02-H1</span><div class="ps-text">Intrusion Alarm
+                        System</div><span class="ps-sdg">SDG 11</span><div class="ps-desc">Magnetic reed switches for
+                        door/window security</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-H2</span><div class="ps-text">USB Port Alert</div>
+                      <span class="ps-sdg">SDG 9</span><div class="ps-desc">Buzzer if unauthorized device is plugged in
+                        (detects 5V)</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-H3</span><div class="ps-text">Laser Tripwire
+                        Security</div><span class="ps-sdg">SDG 11, 16</span><div class="ps-desc">LDR and laser pointer for
+                        perimeter protection</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="fintech-senior-sw" role="tabpanel"
+                      aria-label="Fintech Falcons senior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">FF-02-S1</span><div class="ps-text">AI-Based Credit
+                        Scoring System</div><span class="ps-sdg">SDG 10</span><div class="ps-desc">Uses alternative data
+                        for unbanked users</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-S2</span><div class="ps-text">Blockchain-Based P2P
+                        Lending DApp</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Smart contracts for
+                        peer-to-peer lending</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-S3</span><div class="ps-text">Fraudulent
+                        Transaction Detection System</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">AI pattern
+                        analysis to catch suspicious activity</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-S4</span><div class="ps-text">Automated
+                        Crypto-Portfolio Manager</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Live prices with
+                        RSI-based suggestions</div></div>
+                    <div class="ps-card"><span class="ps-badge">FF-02-S5</span><div class="ps-text">Micro-Insurance
+                        Portal for Gig Workers</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Flexible
+                        daily/weekly insurance plans</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="accordion-body">
-            <div class="info-bar"><i class="fa-solid fa-circle-info"></i> Select your year track, then choose Hardware or Software — each card is a valid problem statement.</div>
-            <div class="tab-row">
-              <button class="tab active" onclick="switchTab(this,'fintech-junior','fintech-senior')">Junior (1st Year)</button>
-              <button class="tab" onclick="switchTab(this,'fintech-senior','fintech-junior')">Senior (2nd/3rd Year)</button>
-            </div>
 
-            <div class="tab-panel active" id="fintech-junior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'fintech-junior-hw','fintech-junior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'fintech-junior-sw','fintech-junior-hw')">💻 Software</button>
+          <!-- CYBER CRUSADERS -->
+          <div class="accordion" id="acc-cyber">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-cyber-body">
+                <span class="accordion-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Cyber Crusaders</span><span
+                    class="accordion-tagline">"The Defensive Wall" — Cybersecurity</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body" id="acc-cyber-body">
+              <div class="info-bar"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Select your year track,
+                then choose Hardware or Software — each card is a valid problem statement.</div>
+              <div class="tab-row" role="tablist" aria-label="Cyber Crusaders year track">
+                <button class="tab active" type="button" role="tab" aria-selected="true" aria-controls="cyber-junior"
+                  data-tab-panel="cyber-junior">Junior (1st Year)</button>
+                <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="cyber-senior"
+                  data-tab-panel="cyber-senior" tabindex="-1">Senior (2nd/3rd Year)</button>
               </div>
-              <div class="tab-panel active" id="fintech-junior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">FF-01-H1</span><div class="ps-text">Digital Keypad Savings Box</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Unlocks with a 4-digit code on a 4×4 Matrix Keypad</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-H2</span><div class="ps-text">Smart Coin Counter</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">IR sensor counts and totals coin value on display</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-H3</span><div class="ps-text">RFID-Based "Pocket Money" Card</div><span class="ps-sdg">SDG 8, 9</span><div class="ps-desc">Reads tag and shows balance on LCD</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="fintech-junior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">FF-01-S1</span><div class="ps-text">Smart Expense Tracker &amp; Budget Planner</div><span class="ps-sdg">SDG 12</span><div class="ps-desc">Visual charts and budget alerts</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-S2</span><div class="ps-text">Personalized Fixed Deposit (FD) Calculator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Compares bank interest rates side by side</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-S3</span><div class="ps-text">Basic Stock Market Learning Simulator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Virtual currency for risk-free trading practice</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-S4</span><div class="ps-text">Group Expense Splitter (Split-Bill)</div><span class="ps-sdg">SDG 17</span><div class="ps-desc">Calculates and tracks shared costs among groups</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-01-S5</span><div class="ps-text">Automated Invoice Generator for Small Businesses</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Generates professional PDF invoices automatically</div></div>
-                </div>
-              </div>
-            </div>
 
-            <div class="tab-panel" id="fintech-senior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'fintech-senior-hw','fintech-senior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'fintech-senior-sw','fintech-senior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="fintech-senior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">FF-02-H1</span><div class="ps-text">Intrusion Alarm System</div><span class="ps-sdg">SDG 11</span><div class="ps-desc">Magnetic reed switches for door/window security</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-H2</span><div class="ps-text">USB Port Alert</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Buzzer if unauthorized device is plugged in (detects 5V)</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-H3</span><div class="ps-text">Laser Tripwire Security</div><span class="ps-sdg">SDG 11, 16</span><div class="ps-desc">LDR and laser pointer for perimeter protection</div></div>
+              <div class="tab-panel active" id="cyber-junior" role="tabpanel" aria-label="Cyber Crusaders junior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Cyber Crusaders junior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="cyber-junior-hw" data-tab-panel="cyber-junior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="cyber-junior-sw" data-tab-panel="cyber-junior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="cyber-junior-hw" role="tabpanel"
+                  aria-label="Cyber Crusaders junior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">CC-01-H1</span><div class="ps-text">Keypad-Based Digital
+                        Deadbolt</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Servo motor unlocks on correct
+                        4-digit PIN</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-H2</span><div class="ps-text">Laser Tripwire Security
+                        Alarm</div><span class="ps-sdg">SDG 11, 16</span><div class="ps-desc">LDR + laser beam — buzzer
+                        triggers on breach</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-H3</span><div class="ps-text">Magnetic Intrusion
+                        Detector</div><span class="ps-sdg">SDG 11</span><div class="ps-desc">Reed switch monitors
+                        doors/windows for unauthorized entry</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="cyber-junior-sw" role="tabpanel"
+                      aria-label="Cyber Crusaders junior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">CC-01-S1</span><div class="ps-text">Smart Password
+                        Security Analyzer</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Rates password
+                        strength and suggests improvements</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-S2</span><div class="ps-text">Basic Phishing URL
+                        Detection System</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Flags suspicious URLs
+                        before users click them</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-S3</span><div class="ps-text">Secure File Encryption
+                        &amp; Decryption Tool</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Protects files
+                        with robust encryption standards</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-S4</span><div class="ps-text">Multi-Factor
+                        Authentication Login System</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Layered identity
+                        verification for secure access</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-01-S5</span><div class="ps-text">Educational Network
+                        Packet Analyzer</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Visualizes network traffic
+                        for learning purposes</div></div>
+                  </div>
                 </div>
               </div>
-              <div class="tab-panel" id="fintech-senior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">FF-02-S1</span><div class="ps-text">AI-Based Credit Scoring System</div><span class="ps-sdg">SDG 10</span><div class="ps-desc">Uses alternative data for unbanked users</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-S2</span><div class="ps-text">Blockchain-Based P2P Lending DApp</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Smart contracts for peer-to-peer lending</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-S3</span><div class="ps-text">Fraudulent Transaction Detection System</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">AI pattern analysis to catch suspicious activity</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-S4</span><div class="ps-text">Automated Crypto-Portfolio Manager</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Live prices with RSI-based suggestions</div></div>
-                  <div class="ps-card"><span class="ps-badge">FF-02-S5</span><div class="ps-text">Micro-Insurance Portal for Gig Workers</div><span class="ps-sdg">SDG 8</span><div class="ps-desc">Flexible daily/weekly insurance plans</div></div>
+
+              <div class="tab-panel" id="cyber-senior" role="tabpanel" aria-label="Cyber Crusaders senior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Cyber Crusaders senior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="cyber-senior-hw" data-tab-panel="cyber-senior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="cyber-senior-sw" data-tab-panel="cyber-senior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="cyber-senior-hw" role="tabpanel"
+                  aria-label="Cyber Crusaders senior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">CC-02-H1</span><div class="ps-text">Two-Factor (Keypad +
+                        RFID) Access Control</div><span class="ps-sdg">SDG 9, 16</span><div class="ps-desc">Requires both RFID
+                        tag and correct PIN to unlock</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-H2</span><div class="ps-text">Hardware-Based
+                        Keylogger Detector</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Arduino monitors
+                        keyboard-PC data line for anomalies</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-H3</span><div class="ps-text">ESP32 Deauth
+                        Detector</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">LED alert triggered by
+                        Wi-Fi deauthentication attacks</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="cyber-senior-sw" role="tabpanel"
+                      aria-label="Cyber Crusaders senior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">CC-02-S1</span><div class="ps-text">AI-Based Phishing &amp;
+                        Fraud Detection System</div><span class="ps-sdg">SDG 9, 16</span><div class="ps-desc">Machine
+                        learning model trained on threat patterns</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-S2</span><div class="ps-text">Intelligent Network
+                        Intrusion Detection System (IDS)</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Real-time
+                        anomaly detection on network traffic</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-S3</span><div class="ps-text">Secure Cloud Storage
+                        with End-to-End Encryption</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Only the owner
+                        can decrypt stored files</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-S4</span><div class="ps-text">Blockchain-Based Secure
+                        Voting Platform</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Immutable, tamper-proof
+                        digital voting system</div></div>
+                    <div class="ps-card"><span class="ps-badge">CC-02-S5</span><div class="ps-text">Ransomware Detection
+                        &amp; Prevention System</div><span class="ps-sdg">SDG 8, 9</span><div class="ps-desc">Monitors file
+                        changes to stop encryption attacks early</div></div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- MED MAVERICKS -->
+          <div class="accordion" id="acc-med">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-med-body">
+                <span class="accordion-icon"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Med Mavericks</span><span
+                    class="accordion-tagline">"Innovative Outliers" — Healthcare</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body" id="acc-med-body">
+              <div class="info-bar"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Select your year track,
+                then choose Hardware or Software — each card is a valid problem statement.</div>
+              <div class="tab-row" role="tablist" aria-label="Med Mavericks year track">
+                <button class="tab active" type="button" role="tab" aria-selected="true" aria-controls="med-junior"
+                  data-tab-panel="med-junior">Junior (1st Year)</button>
+                <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="med-senior"
+                  data-tab-panel="med-senior" tabindex="-1">Senior (2nd/3rd Year)</button>
+              </div>
+
+              <div class="tab-panel active" id="med-junior" role="tabpanel" aria-label="Med Mavericks junior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Med Mavericks junior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="med-junior-hw" data-tab-panel="med-junior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="med-junior-sw" data-tab-panel="med-junior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="med-junior-hw" role="tabpanel"
+                  aria-label="Med Mavericks junior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">MM-01-H1</span><div class="ps-text">Touchless Sanitizer
+                        Dispenser</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">IR sensor triggers mini pump —
+                        hands-free hygiene</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-H2</span><div class="ps-text">Smart Posture Alert
+                        </div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Wearable tilt sensor vibrates when
+                        slouching detected</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-H3</span><div class="ps-text">Ambient Recovery
+                        Monitor</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">DHT11 tracks hospital room
+                        temperature and humidity</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="med-junior-sw" role="tabpanel"
+                      aria-label="Med Mavericks junior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">MM-01-S1</span><div class="ps-text">Personalized BMI &amp;
+                        Fitness Goal Tracker</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Includes hydration
+                        targets and progress charts</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-S2</span><div class="ps-text">Interactive Digital
+                        First-Aid Assistant</div><span class="ps-sdg">SDG 3, 4</span><div class="ps-desc">Step-by-step guidance
+                        with nearby hospital map</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-S3</span><div class="ps-text">Smart Prescription
+                        Digitizer</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Converts handwritten medicine
+                        names to digital records</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-S4</span><div class="ps-text">Community Blood
+                        Donation Link</div><span class="ps-sdg">SDG 3, 17</span><div class="ps-desc">Connects donors with
+                        patients by blood type and urgency</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-01-S5</span><div class="ps-text">Daily Mental Health Mood
+                        Journal</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Visualizes emotional well-being
+                        trends over time</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-panel" id="med-senior" role="tabpanel" aria-label="Med Mavericks senior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Med Mavericks senior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="med-senior-hw" data-tab-panel="med-senior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="med-senior-sw" data-tab-panel="med-senior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="med-senior-hw" role="tabpanel"
+                  aria-label="Med Mavericks senior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">MM-02-H1</span><div class="ps-text">IoT Pulse &amp;
+                        Oximeter Hub</div><span class="ps-sdg">SDG 3, 9</span><div class="ps-desc">MAX30102 streams live
+                        vitals to the cloud</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-H2</span><div class="ps-text">Smart Pill Box</div>
+                      <span class="ps-sdg">SDG 3</span><div class="ps-desc">Multi-compartment with buzzers and caregiver
+                        SMS alerts</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-H3</span><div class="ps-text">Saline Level Monitor
+                        </div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Optical/weight sensor alerts nurses when
+                        IV bag runs low</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="med-senior-sw" role="tabpanel"
+                      aria-label="Med Mavericks senior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">MM-02-S1</span><div class="ps-text">AI-Based Medical
+                        Imaging Diagnostic Tool</div><span class="ps-sdg">SDG 3, 9</span><div class="ps-desc">CNNs detect
+                        pneumonia and fractures from X-rays</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-S2</span><div class="ps-text">Blockchain-Based Secure
+                        Health Record Vault</div><span class="ps-sdg">SDG 3, 16</span><div class="ps-desc">Patient-controlled
+                        decentralized medical records</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-S3</span><div class="ps-text">Predictive Analytics
+                        for Disease Outbreak</div><span class="ps-sdg">SDG 3, 11</span><div class="ps-desc">Mathematical models
+                        to forecast infection spread</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-S4</span><div class="ps-text">Virtual Physiotherapy
+                        Assistant</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Camera tracks limb movement for
+                        guided rehab exercises</div></div>
+                    <div class="ps-card"><span class="ps-badge">MM-02-S5</span><div class="ps-text">Centralized Pharmacy
+                        Inventory Management</div><span class="ps-sdg">SDG 3, 12</span><div class="ps-desc">Tracks stocks, expiry
+                        dates, and auto-reorder triggers</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACADEMIC TITANS -->
+          <div class="accordion" id="acc-academic">
+            <h3 class="accordion-heading">
+              <button class="accordion-head" type="button" aria-expanded="false" aria-controls="acc-academic-body">
+                <span class="accordion-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
+                <span class="accordion-meta"><span class="accordion-name">Academic Titans</span><span
+                    class="accordion-tagline">"Knowledge Pillars" — EdTech</span></span>
+                <i class="fa-solid fa-chevron-down accordion-toggle" aria-hidden="true"></i>
+              </button>
+            </h3>
+            <div class="accordion-body" id="acc-academic-body">
+              <div class="info-bar"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Select your year track,
+                then choose Hardware or Software — each card is a valid problem statement.</div>
+              <div class="tab-row" role="tablist" aria-label="Academic Titans year track">
+                <button class="tab active" type="button" role="tab" aria-selected="true"
+                  aria-controls="academic-junior" data-tab-panel="academic-junior">Junior (1st Year)</button>
+                <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="academic-senior"
+                  data-tab-panel="academic-senior" tabindex="-1">Senior (2nd/3rd Year)</button>
+              </div>
+
+              <div class="tab-panel active" id="academic-junior" role="tabpanel"
+                aria-label="Academic Titans junior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Academic Titans junior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="academic-junior-hw" data-tab-panel="academic-junior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="academic-junior-sw" data-tab-panel="academic-junior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="academic-junior-hw" role="tabpanel"
+                  aria-label="Academic Titans junior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">AT-01-H1</span><div class="ps-text">Arduino-Based Quiz
+                        Buzzer System</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Multi-team buzzer with
+                        display and timer for quiz events</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-H2</span><div class="ps-text">RFID-Based Smart
+                        Attendance System</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Tap card to log
+                        attendance automatically</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-H3</span><div class="ps-text">Voice-Controlled
+                        Learning Device for Disabled Students</div><span class="ps-sdg">SDG 4, 10</span><div class="ps-desc">Accessible
+                        learning interface driven by voice commands</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="academic-junior-sw" role="tabpanel"
+                      aria-label="Academic Titans junior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">AT-01-S1</span><div class="ps-text">Resume Builder with
+                        Skill Suggestions</div><span class="ps-sdg">SDG 4, 8</span><div class="ps-desc">AI-powered tips to
+                        improve resume quality</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-S2</span><div class="ps-text">Smart Timetable
+                        Generator with Conflict Resolution</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Automatically
+                        avoids scheduling clashes</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-S3</span><div class="ps-text">Automatic Quiz
+                        Generator from Study Materials</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Parses documents
+                        to generate practice questions</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-S4</span><div class="ps-text">AI-Based Student Doubt
+                        Solving Chatbot</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Basic chatbot that answers
+                        subject-specific queries</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-01-S5</span><div class="ps-text">Gamified Learning
+                        Platform with Rewards</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Badges, leaderboards,
+                        and XP to motivate learners</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-panel" id="academic-senior" role="tabpanel"
+                aria-label="Academic Titans senior track">
+                <div class="tab-row tab-row--sub" role="tablist" aria-label="Academic Titans senior track type">
+                  <button class="tab-sm active" type="button" role="tab" aria-selected="true"
+                    aria-controls="academic-senior-hw" data-tab-panel="academic-senior-hw">⚙️ Hardware</button>
+                  <button class="tab-sm" type="button" role="tab" aria-selected="false"
+                    aria-controls="academic-senior-sw" data-tab-panel="academic-senior-sw" tabindex="-1">💻 Software</button>
+                </div>
+                <div class="tab-panel active" id="academic-senior-hw" role="tabpanel"
+                  aria-label="Academic Titans senior hardware problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">AT-02-H1</span><div class="ps-text">Smart Pen for Digital
+                        Note Conversion</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Captures handwriting and
+                        converts to searchable digital text</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-H2</span><div class="ps-text">Smart Exam Monitoring
+                        System (Anti-Cheating)</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Sensors detect and
+                        flag suspicious movements during exams</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-H3</span><div class="ps-text">IoT-Based Library
+                        Management &amp; Book Tracking</div><span class="ps-sdg">SDG 4, 9</span><div class="ps-desc">Real-time
+                        location tracking for books and borrowers</div></div>
+                  </div>
+                </div>
+                <div class="tab-panel" id="academic-senior-sw" role="tabpanel"
+                      aria-label="Academic Titans senior software problems">
+                  <div class="ps-grid">
+                    <div class="ps-card"><span class="ps-badge">AT-02-S1</span><div class="ps-text">AI-Powered Personalized
+                        Learning Path Generator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Adapts course
+                        recommendations to each student's progress</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-S2</span><div class="ps-text">Student Performance
+                        Prediction using Machine Learning</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Early-warning
+                        system for at-risk students</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-S3</span><div class="ps-text">Smart Notes Generator
+                        using NLP</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Auto-summarizes lecture transcripts
+                        into structured notes</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-S4</span><div class="ps-text">Lecture Summarizer using
+                        Speech-to-Text &amp; NLP</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Transcribes and
+                        condenses audio lectures to key points</div></div>
+                    <div class="ps-card"><span class="ps-badge">AT-02-S5</span><div class="ps-text">Voice-Based Learning
+                        Assistant for Visually Impaired</div><span class="ps-sdg">SDG 4, 10</span><div class="ps-desc">Fully
+                        audio-navigable study assistant</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">03</span><h2>Powerplay Schedule</h2><span class="rule"></span></div>
+        <div class="timeline reveal">
+          <div class="tl-item">
+            <div class="tl-date">LAST WEEK OF APRIL 2026</div>
+            <div class="tl-event">Official Launch &amp; Registration Opens</div>
+            <div class="tl-desc">EPL '26 officially kicks off — registrations open to all branches</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">END OF APRIL 2026</div>
+            <div class="tl-event">Registration Deadline</div>
+            <div class="tl-desc">All team registrations must be submitted before end of April</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">1ST WEEK OF MAY 2026</div>
+            <div class="tl-event">Phase 1 — Blueprint Blitz</div>
+            <div class="tl-desc">Submit your Architecture Diagram — UI/UX wireframe (software) or circuit schematic
+              (hardware)</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">2ND &amp; 3RD WEEKS OF MAY 2026</div>
+            <div class="tl-event">Phase 2 — Development Powerplay</div>
+            <div class="tl-desc">Code Kickoff (Week 2): Initialize GitHub repo + first significant commit &amp; Teaser
+              Trailer (Week 3): Post a 30–60 sec project teaser on social media</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">LAST WEEK OF MAY 2026</div>
+            <div class="tl-event">Phase 3 — Video Qualifier Deadline</div>
+            <div class="tl-desc">Upload project video to Google Drive showing concept + near-finished demo. Shortlisted
+              teams advance to Grand Finale</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-date">1ST WEEK OF JUNE 2026</div>
+            <div class="tl-event">Grand Finale Expo &amp; Awards</div>
+            <div class="tl-desc">Present working prototype before expert judges — MVP certificates awarded per
+              domain</div>
           </div>
         </div>
+      </section>
 
-        <!-- CYBER CRUSADERS -->
-        <div class="accordion" id="acc-cyber">
-          <div class="accordion-head" onclick="toggleAcc('acc-cyber')">
-            <div class="accordion-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Cyber Crusaders</div><div class="accordion-tagline">"The Defensive Wall" — Cybersecurity</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body">
-            <div class="info-bar"><i class="fa-solid fa-circle-info"></i> Select your year track, then choose Hardware or Software — each card is a valid problem statement.</div>
-            <div class="tab-row">
-              <button class="tab active" onclick="switchTab(this,'cyber-junior','cyber-senior')">Junior (1st Year)</button>
-              <button class="tab" onclick="switchTab(this,'cyber-senior','cyber-junior')">Senior (2nd/3rd Year)</button>
-            </div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">04</span><h2>Flash Challenges</h2><span class="rule"></span></div>
+        <div class="tiles reveal">
+          <div class="tile"><i class="fa-solid fa-drafting-compass" aria-hidden="true"></i><div><div class="tile-label">Week
+                1 — Blueprint Blitz</div><div class="tile-value">Submit a high-quality Architecture Diagram: UI/UX wireframe
+                (software) or circuit schematic (hardware)</div></div></div>
+          <div class="tile"><i class="fa-brands fa-github" aria-hidden="true"></i><div><div class="tile-label">Week 2 —
+                Code Kickoff</div><div class="tile-value">Initialize GitHub repo + first significant commit with a
+                professional README.md</div></div></div>
+          <div class="tile"><i class="fa-solid fa-video" aria-hidden="true"></i><div><div class="tile-label">Week 3 —
+                Teaser Trailer</div><div class="tile-value">Post a 30–60 sec teaser on LinkedIn/Instagram tagging Code Crypt
+                &amp; ACM-W Stanley</div></div></div>
+          <div class="tile"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><div><div class="tile-label">Week 4 —
+                Documentation Sprint</div><div class="tile-value">Submit first draft of Technical Documentation including
+                Problem Statement ID, SDG, and tech stack</div></div></div>
+        </div>
+      </section>
 
-            <div class="tab-panel active" id="cyber-junior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'cyber-junior-hw','cyber-junior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'cyber-junior-sw','cyber-junior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="cyber-junior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">CC-01-H1</span><div class="ps-text">Keypad-Based Digital Deadbolt</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Servo motor unlocks on correct 4-digit PIN</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-H2</span><div class="ps-text">Laser Tripwire Security Alarm</div><span class="ps-sdg">SDG 11, 16</span><div class="ps-desc">LDR + laser beam — buzzer triggers on breach</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-H3</span><div class="ps-text">Magnetic Intrusion Detector</div><span class="ps-sdg">SDG 11</span><div class="ps-desc">Reed switch monitors doors/windows for unauthorized entry</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="cyber-junior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">CC-01-S1</span><div class="ps-text">Smart Password Security Analyzer</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Rates password strength and suggests improvements</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-S2</span><div class="ps-text">Basic Phishing URL Detection System</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Flags suspicious URLs before users click them</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-S3</span><div class="ps-text">Secure File Encryption &amp; Decryption Tool</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Protects files with robust encryption standards</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-S4</span><div class="ps-text">Multi-Factor Authentication Login System</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Layered identity verification for secure access</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-01-S5</span><div class="ps-text">Educational Network Packet Analyzer</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Visualizes network traffic for learning purposes</div></div>
-                </div>
-              </div>
-            </div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">05</span><h2>Guidelines</h2><span class="rule"></span></div>
+        <ul class="line-list reveal">
+          <li><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span><strong>Documentation:</strong> All projects
+              must clearly state which SDG they address. Documentation must follow the official blueprint but can be
+              presented creatively.</span></li>
+          <li><i class="fa-brands fa-github" aria-hidden="true"></i><span><strong>GitHub Repository:</strong> All code,
+              circuit designs, and documentation must be uploaded to a <em>public</em> GitHub repository upon
+              completion.</span></li>
+          <li><i class="fa-solid fa-certificate" aria-hidden="true"></i><span><strong>Certification:</strong> MVP Team
+              certificates awarded per domain based on live demo, documentation quality, and GitHub
+              submission.</span></li>
+          <li><i class="fa-solid fa-microchip" aria-hidden="true"></i><span><strong>Component Sourcing:</strong> The
+              college/club will not provide hardware components or kits. Teams must source their own materials.</span>
+          </li>
+          <li><i class="fa-solid fa-plug" aria-hidden="true"></i><span><strong>Infrastructure:</strong> Basic power sockets
+              provided at venue. Teams are strongly encouraged to bring their own extension boards/spike busters.</span>
+          </li>
+          <li><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span><strong>Safety &amp;
+                Compliance:</strong> All hardware must be safe and properly insulated. High-voltage components or flammable
+                materials require prior faculty approval.</span></li>
+        </ul>
+      </section>
 
-            <div class="tab-panel" id="cyber-senior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'cyber-senior-hw','cyber-senior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'cyber-senior-sw','cyber-senior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="cyber-senior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">CC-02-H1</span><div class="ps-text">Two-Factor (Keypad + RFID) Access Control</div><span class="ps-sdg">SDG 9, 16</span><div class="ps-desc">Requires both RFID tag and correct PIN to unlock</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-H2</span><div class="ps-text">Hardware-Based Keylogger Detector</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Arduino monitors keyboard-PC data line for anomalies</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-H3</span><div class="ps-text">ESP32 Deauth Detector</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">LED alert triggered by Wi-Fi deauthentication attacks</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="cyber-senior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">CC-02-S1</span><div class="ps-text">AI-Based Phishing &amp; Fraud Detection System</div><span class="ps-sdg">SDG 9, 16</span><div class="ps-desc">Machine learning model trained on threat patterns</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-S2</span><div class="ps-text">Intelligent Network Intrusion Detection System (IDS)</div><span class="ps-sdg">SDG 9</span><div class="ps-desc">Real-time anomaly detection on network traffic</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-S3</span><div class="ps-text">Secure Cloud Storage with End-to-End Encryption</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Only the owner can decrypt stored files</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-S4</span><div class="ps-text">Blockchain-Based Secure Voting Platform</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Immutable, tamper-proof digital voting system</div></div>
-                  <div class="ps-card"><span class="ps-badge">CC-02-S5</span><div class="ps-text">Ransomware Detection &amp; Prevention System</div><span class="ps-sdg">SDG 8, 9</span><div class="ps-desc">Monitors file changes to stop encryption attacks early</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <section class="sect">
+        <div class="sect-label reveal"><span class="num">06</span><h2>Contact</h2><span class="rule"></span></div>
+        <div class="tiles reveal">
+          <div class="tile"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><div><div class="tile-label">
+                Faculty Coordinator</div><div class="tile-value">Dr. P.R. Anisha<br>Ms. Hafsa IUA</div></div></div>
+          <div class="tile"><i class="fa-solid fa-user-tie" aria-hidden="true"></i><div><div class="tile-label">Student
+                Support</div><div class="tile-value">Safa Fatima<br>Lalitya T<br>Reach us at<br><a
+                  href="mailto:codecrypt@stanley.edu.in">codecrypt@stanley.edu.in</a></div></div></div>
+          <div class="tile"><i class="fa-solid fa-envelope" aria-hidden="true"></i><div><div class="tile-label">Club
+                Contact</div><div class="tile-value"><a href="mailto:codecrypt@stanley.edu.in">codecrypt@stanley.edu.in</a><br>Code
+                Crypt, Dept. of CSE</div></div></div>
         </div>
 
-        <!-- MED MAVERICKS -->
-        <div class="accordion" id="acc-med">
-          <div class="accordion-head" onclick="toggleAcc('acc-med')">
-            <div class="accordion-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Med Mavericks</div><div class="accordion-tagline">"Innovative Outliers" — Healthcare</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body">
-            <div class="info-bar"><i class="fa-solid fa-circle-info"></i> Select your year track, then choose Hardware or Software — each card is a valid problem statement.</div>
-            <div class="tab-row">
-              <button class="tab active" onclick="switchTab(this,'med-junior','med-senior')">Junior (1st Year)</button>
-              <button class="tab" onclick="switchTab(this,'med-senior','med-junior')">Senior (2nd/3rd Year)</button>
-            </div>
-
-            <div class="tab-panel active" id="med-junior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'med-junior-hw','med-junior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'med-junior-sw','med-junior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="med-junior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">MM-01-H1</span><div class="ps-text">Touchless Sanitizer Dispenser</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">IR sensor triggers mini pump — hands-free hygiene</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-H2</span><div class="ps-text">Smart Posture Alert</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Wearable tilt sensor vibrates when slouching detected</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-H3</span><div class="ps-text">Ambient Recovery Monitor</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">DHT11 tracks hospital room temperature and humidity</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="med-junior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">MM-01-S1</span><div class="ps-text">Personalized BMI &amp; Fitness Goal Tracker</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Includes hydration targets and progress charts</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-S2</span><div class="ps-text">Interactive Digital First-Aid Assistant</div><span class="ps-sdg">SDG 3, 4</span><div class="ps-desc">Step-by-step guidance with nearby hospital map</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-S3</span><div class="ps-text">Smart Prescription Digitizer</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Converts handwritten medicine names to digital records</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-S4</span><div class="ps-text">Community Blood Donation Link</div><span class="ps-sdg">SDG 3, 17</span><div class="ps-desc">Connects donors with patients by blood type and urgency</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-01-S5</span><div class="ps-text">Daily Mental Health Mood Journal</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Visualizes emotional well-being trends over time</div></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel" id="med-senior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'med-senior-hw','med-senior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'med-senior-sw','med-senior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="med-senior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">MM-02-H1</span><div class="ps-text">IoT Pulse &amp; Oximeter Hub</div><span class="ps-sdg">SDG 3, 9</span><div class="ps-desc">MAX30102 streams live vitals to the cloud</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-H2</span><div class="ps-text">Smart Pill Box</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Multi-compartment with buzzers and caregiver SMS alerts</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-H3</span><div class="ps-text">Saline Level Monitor</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Optical/weight sensor alerts nurses when IV bag runs low</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="med-senior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">MM-02-S1</span><div class="ps-text">AI-Based Medical Imaging Diagnostic Tool</div><span class="ps-sdg">SDG 3, 9</span><div class="ps-desc">CNNs detect pneumonia and fractures from X-rays</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-S2</span><div class="ps-text">Blockchain-Based Secure Health Record Vault</div><span class="ps-sdg">SDG 3, 16</span><div class="ps-desc">Patient-controlled decentralized medical records</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-S3</span><div class="ps-text">Predictive Analytics for Disease Outbreak</div><span class="ps-sdg">SDG 3, 11</span><div class="ps-desc">Mathematical models to forecast infection spread</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-S4</span><div class="ps-text">Virtual Physiotherapy Assistant</div><span class="ps-sdg">SDG 3</span><div class="ps-desc">Camera tracks limb movement for guided rehab exercises</div></div>
-                  <div class="ps-card"><span class="ps-badge">MM-02-S5</span><div class="ps-text">Centralized Pharmacy Inventory Management</div><span class="ps-sdg">SDG 3, 12</span><div class="ps-desc">Tracks stocks, expiry dates, and auto-reorder triggers</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="reveal cta-block">
+          <span class="pill pill--closed"><i class="fa-solid fa-lock" aria-hidden="true"></i> Registration Closed</span>
+          <p class="cta-note">Registration for EPL '26 is now closed</p>
         </div>
+      </section>
 
-        <!-- ACADEMIC TITANS -->
-        <div class="accordion" id="acc-academic">
-          <div class="accordion-head" onclick="toggleAcc('acc-academic')">
-            <div class="accordion-icon"><i class="fa-solid fa-book-open"></i></div>
-            <div class="accordion-meta"><div class="accordion-name">Academic Titans</div><div class="accordion-tagline">"Knowledge Pillars" — EdTech</div></div>
-            <i class="fa-solid fa-chevron-down accordion-toggle"></i>
-          </div>
-          <div class="accordion-body">
-            <div class="info-bar"><i class="fa-solid fa-circle-info"></i> Select your year track, then choose Hardware or Software — each card is a valid problem statement.</div>
-            <div class="tab-row">
-              <button class="tab active" onclick="switchTab(this,'academic-junior','academic-senior')">Junior (1st Year)</button>
-              <button class="tab" onclick="switchTab(this,'academic-senior','academic-junior')">Senior (2nd/3rd Year)</button>
-            </div>
-
-            <div class="tab-panel active" id="academic-junior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'academic-junior-hw','academic-junior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'academic-junior-sw','academic-junior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="academic-junior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">AT-01-H1</span><div class="ps-text">Arduino-Based Quiz Buzzer System</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Multi-team buzzer with display and timer for quiz events</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-H2</span><div class="ps-text">RFID-Based Smart Attendance System</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Tap card to log attendance automatically</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-H3</span><div class="ps-text">Voice-Controlled Learning Device for Disabled Students</div><span class="ps-sdg">SDG 4, 10</span><div class="ps-desc">Accessible learning interface driven by voice commands</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="academic-junior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">AT-01-S1</span><div class="ps-text">Resume Builder with Skill Suggestions</div><span class="ps-sdg">SDG 4, 8</span><div class="ps-desc">AI-powered tips to improve resume quality</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-S2</span><div class="ps-text">Smart Timetable Generator with Conflict Resolution</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Automatically avoids scheduling clashes</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-S3</span><div class="ps-text">Automatic Quiz Generator from Study Materials</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Parses documents to generate practice questions</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-S4</span><div class="ps-text">AI-Based Student Doubt Solving Chatbot</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Basic chatbot that answers subject-specific queries</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-01-S5</span><div class="ps-text">Gamified Learning Platform with Rewards</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Badges, leaderboards, and XP to motivate learners</div></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel" id="academic-senior">
-              <div class="tab-row tab-row--sub">
-                <button class="tab-sm active" onclick="switchType(this,'academic-senior-hw','academic-senior-sw')">⚙️ Hardware</button>
-                <button class="tab-sm" onclick="switchType(this,'academic-senior-sw','academic-senior-hw')">💻 Software</button>
-              </div>
-              <div class="tab-panel active" id="academic-senior-hw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">AT-02-H1</span><div class="ps-text">Smart Pen for Digital Note Conversion</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Captures handwriting and converts to searchable digital text</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-H2</span><div class="ps-text">Smart Exam Monitoring System (Anti-Cheating)</div><span class="ps-sdg">SDG 16</span><div class="ps-desc">Sensors detect and flag suspicious movements during exams</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-H3</span><div class="ps-text">IoT-Based Library Management &amp; Book Tracking</div><span class="ps-sdg">SDG 4, 9</span><div class="ps-desc">Real-time location tracking for books and borrowers</div></div>
-                </div>
-              </div>
-              <div class="tab-panel" id="academic-senior-sw">
-                <div class="ps-grid">
-                  <div class="ps-card"><span class="ps-badge">AT-02-S1</span><div class="ps-text">AI-Powered Personalized Learning Path Generator</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Adapts course recommendations to each student's progress</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-S2</span><div class="ps-text">Student Performance Prediction using Machine Learning</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Early-warning system for at-risk students</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-S3</span><div class="ps-text">Smart Notes Generator using NLP</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Auto-summarizes lecture transcripts into structured notes</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-S4</span><div class="ps-text">Lecture Summarizer using Speech-to-Text &amp; NLP</div><span class="ps-sdg">SDG 4</span><div class="ps-desc">Transcribes and condenses audio lectures to key points</div></div>
-                  <div class="ps-card"><span class="ps-badge">AT-02-S5</span><div class="ps-text">Voice-Based Learning Assistant for Visually Impaired</div><span class="ps-sdg">SDG 4, 10</span><div class="ps-desc">Fully audio-navigable study assistant</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">03</span><h2>Powerplay Schedule</h2><span class="rule"></span></div>
-      <div class="timeline reveal">
-        <div class="tl-item"><div class="tl-date">LAST WEEK OF APRIL 2026</div><div class="tl-event">Official Launch &amp; Registration Opens</div><div class="tl-desc">EPL '26 officially kicks off — registrations open to all branches</div></div>
-        <div class="tl-item"><div class="tl-date">END OF APRIL 2026</div><div class="tl-event">Registration Deadline</div><div class="tl-desc">All team registrations must be submitted before end of April</div></div>
-        <div class="tl-item"><div class="tl-date">1ST WEEK OF MAY 2026</div><div class="tl-event">Phase 1 — Blueprint Blitz</div><div class="tl-desc">Submit your Architecture Diagram — UI/UX wireframe (software) or circuit schematic (hardware)</div></div>
-        <div class="tl-item"><div class="tl-date">2ND &amp; 3RD WEEKS OF MAY 2026</div><div class="tl-event">Phase 2 — Development Powerplay</div><div class="tl-desc">Code Kickoff (Week 2): Initialize GitHub repo + first significant commit &amp; Teaser Trailer (Week 3): Post a 30–60 sec project teaser on social media</div></div>
-        <div class="tl-item"><div class="tl-date">LAST WEEK OF MAY 2026</div><div class="tl-event">Phase 3 — Video Qualifier Deadline</div><div class="tl-desc">Upload project video to Google Drive showing concept + near-finished demo. Shortlisted teams advance to Grand Finale</div></div>
-        <div class="tl-item"><div class="tl-date">1ST WEEK OF JUNE 2026</div><div class="tl-event">Grand Finale Expo &amp; Awards</div><div class="tl-desc">Present working prototype before expert judges — MVP certificates awarded per domain</div></div>
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">04</span><h2>Flash Challenges</h2><span class="rule"></span></div>
-      <div class="tiles reveal">
-        <div class="tile"><i class="fa-solid fa-drafting-compass"></i><div><div class="tile-label">Week 1 — Blueprint Blitz</div><div class="tile-value">Submit a high-quality Architecture Diagram: UI/UX wireframe (software) or circuit schematic (hardware)</div></div></div>
-        <div class="tile"><i class="fa-brands fa-github"></i><div><div class="tile-label">Week 2 — Code Kickoff</div><div class="tile-value">Initialize GitHub repo + first significant commit with a professional README.md</div></div></div>
-        <div class="tile"><i class="fa-solid fa-video"></i><div><div class="tile-label">Week 3 — Teaser Trailer</div><div class="tile-value">Post a 30–60 sec teaser on LinkedIn/Instagram tagging Code Crypt &amp; ACM-W Stanley</div></div></div>
-        <div class="tile"><i class="fa-solid fa-file-lines"></i><div><div class="tile-label">Week 4 — Documentation Sprint</div><div class="tile-value">Submit first draft of Technical Documentation including Problem Statement ID, SDG, and tech stack</div></div></div>
-      </div>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">05</span><h2>Guidelines</h2><span class="rule"></span></div>
-      <ul class="line-list reveal">
-        <li><i class="fa-solid fa-file-lines"></i><span><strong>Documentation:</strong> All projects must clearly state which SDG they address. Documentation must follow the official blueprint but can be presented creatively.</span></li>
-        <li><i class="fa-brands fa-github"></i><span><strong>GitHub Repository:</strong> All code, circuit designs, and documentation must be uploaded to a <em>public</em> GitHub repository upon completion.</span></li>
-        <li><i class="fa-solid fa-certificate"></i><span><strong>Certification:</strong> MVP Team certificates awarded per domain based on live demo, documentation quality, and GitHub submission.</span></li>
-        <li><i class="fa-solid fa-microchip"></i><span><strong>Component Sourcing:</strong> The college/club will not provide hardware components or kits. Teams must source their own materials.</span></li>
-        <li><i class="fa-solid fa-plug"></i><span><strong>Infrastructure:</strong> Basic power sockets provided at venue. Teams are strongly encouraged to bring their own extension boards/spike busters.</span></li>
-        <li><i class="fa-solid fa-triangle-exclamation"></i><span><strong>Safety &amp; Compliance:</strong> All hardware must be safe and properly insulated. High-voltage components or flammable materials require prior faculty approval.</span></li>
-      </ul>
-    </section>
-
-    <section class="sect">
-      <div class="sect-label reveal"><span class="num">06</span><h2>Contact</h2><span class="rule"></span></div>
-      <div class="tiles reveal">
-        <div class="tile"><i class="fa-solid fa-chalkboard-user"></i><div><div class="tile-label">Faculty Coordinator</div><div class="tile-value">Dr. P.R. Anisha<br>Ms. Hafsa IUA</div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-tie"></i><div><div class="tile-label">Student Support</div><div class="tile-value">Safa Fatima<br><a href="tel:+919032973204">+91 90329 73204</a></div></div></div>
-        <div class="tile"><i class="fa-solid fa-user-tie"></i><div><div class="tile-label">Student Support</div><div class="tile-value">Lalitya T<br><a href="tel:+919440053613">+91 94400 53613</a></div></div></div>
-      </div>
-
-      <div class="reveal" style="text-align:center;margin-top:2.5rem;padding-bottom:4rem;">
-        <span class="pill pill--closed"><i class="fa-solid fa-lock"></i> Registration Closed</span>
-        <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--ink-soft);margin-top:.9rem;">Registration for EPL '26 is now closed</p>
-      </div>
-    </section>
-
-  </div>
+    </div>
+  </main>
 
   <script src="script.js"></script>
-  <script>
-    function toggleAcc(id) { document.getElementById(id).classList.toggle('active'); }
-
-    function switchTab(btn, showId, hideId) {
-      btn.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(showId).classList.add('active');
-      document.getElementById(hideId).classList.remove('active');
-    }
-
-    function switchType(btn, showId, hideId) {
-      btn.parentElement.querySelectorAll('.tab-sm').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(showId).classList.add('active');
-      document.getElementById(hideId).classList.remove('active');
-    }
-  </script>
 </body>
 
 </html>

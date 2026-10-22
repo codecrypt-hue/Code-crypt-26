@@ -1,0 +1,64 @@
+# --- Operating system noise -------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# --- Editors / IDEs ---------------------------------------------------------
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# --- Python (tools/ scripts) -------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+
+# --- Node -------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Secrets, credentials and local environment -----------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+secrets.yml
+secrets.yaml
+.netrc
+.npmrc
+
+# --- Build output / logs -----------------------------------------------------
+build/
+dist/
+_site/
+*.log
+logs/
+.cache/
+
+# --- OS / editor backups -----------------------------------------------------
+*.bak
+*.orig
+*.rej
