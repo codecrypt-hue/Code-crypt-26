@@ -519,6 +519,254 @@
     start();
   }
 
+  /* -------------------------------------------------------- gallery orbit */
+  /**
+   * 3D Circular Photo Orbit (Billboarded)
+   *
+   * Photos revolve along an elliptical 3D orbit driven by page scroll, pointer
+   * dragging and interactive navigation buttons. Every photo card faces the
+   * viewer directly (billboarded: 0deg rotation on X/Y/Z) using translate3d
+   * and scale only. Front photos are prominent, sharp, and highlighted; rear
+   * photos scale down with depth-of-field blur and subtle opacity.
+   */
+  function initGalleryOrbit() {
+    var section = doc.getElementById('gallery');
+    if (!section) {
+      return;
+    }
+
+    var stage = $('#gallery-orbit-stage', section);
+    var carousel = $('#orbit-carousel', section);
+    var cards = $$('.orbit-card', section);
+    var prevBtn = $('.orbit-btn--prev', section);
+    var nextBtn = $('.orbit-btn--next', section);
+    var dotsContainer = $('#orbit-dots', section);
+
+    if (!stage || !carousel || !cards.length) {
+      return;
+    }
+
+    var numCards = cards.length;
+    var baseAngleStep = (Math.PI * 2) / numCards;
+
+    var targetAngle = 0;
+    var currentAngle = 0;
+    var manualOffset = 0;
+    var targetManualOffset = 0;
+    var isDragging = false;
+    var dragStartX = 0;
+    var lastDragX = 0;
+    var dragVelocity = 0;
+
+    // Generate pagination dots
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      cards.forEach(function (_, idx) {
+        var dot = doc.createElement('button');
+        dot.type = 'button';
+        dot.className = 'orbit-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to photo ' + (idx + 1));
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+        dot.addEventListener('click', function () {
+          rotateToCard(idx);
+        });
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    var dots = $$('.orbit-dot', dotsContainer);
+
+    function updateMetrics() {
+      var stageRect = stage.getBoundingClientRect();
+      var stageW = stageRect.width || window.innerWidth;
+      var stageH = stageRect.height || (window.innerHeight * 0.6);
+
+      var rx = Math.min(stageW * 0.40, 470);
+      var ry = Math.min(stageH * 0.22, 110);
+
+      if (window.innerWidth < 600) {
+        rx = Math.min(stageW * 0.37, 160);
+        ry = Math.min(stageH * 0.18, 50);
+      } else if (window.innerWidth < 900) {
+        rx = Math.min(stageW * 0.39, 310);
+        ry = Math.min(stageH * 0.20, 80);
+      }
+
+      return { rx: rx, ry: ry, stageW: stageW, stageH: stageH };
+    }
+
+    var metrics = updateMetrics();
+
+    function render(angle) {
+      var rx = metrics.rx;
+      var ry = metrics.ry;
+      var closestIndex = 0;
+      var maxDepth = -Infinity;
+
+      for (var i = 0; i < numCards; i++) {
+        var card = cards[i];
+        // Angle around the orbit
+        var theta = angle + i * baseAngleStep;
+
+        var sinTheta = Math.sin(theta);
+        var cosTheta = Math.cos(theta);
+
+        // Depth: +1 is front (closest), -1 is back (furthest)
+        var z = cosTheta;
+        var normDepth = (z + 1) * 0.5; // [0, 1]
+
+        if (z > maxDepth) {
+          maxDepth = z;
+          closestIndex = i;
+        }
+
+        // Perspective foreshortening
+        var persp = 0.84 + 0.24 * normDepth;
+        var x = rx * sinTheta * persp;
+        var y = ry * z + (metrics.stageW > 600 ? 14 : 8) * normDepth;
+
+        // Front card is scale ~1.06, rear card is scale ~0.58
+        var scale = 0.58 + 0.48 * normDepth;
+
+        // Opacity: front is 1.0, rear is 0.38
+        var opacity = 0.38 + 0.62 * Math.pow(normDepth, 0.85);
+
+        // Depth of field blur: 0px at front, up to 2.2px at rear
+        var blur = (1 - normDepth) * 2.2;
+
+        // Stacking order: front always on top
+        var zIndex = Math.round(normDepth * 100) + 10;
+
+        /* CRITICAL: Rotate photos' positions around the circle, NOT the photos
+           themselves. translate3d + scale only — zero rotateX/rotateY/rotateZ. */
+        card.style.transform = 'translate3d(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px, 0px) translate(-50%, -50%) scale(' + scale.toFixed(3) + ')';
+        card.style.opacity = opacity.toFixed(3);
+        card.style.zIndex = zIndex;
+        card.style.filter = blur > 0.35 ? 'blur(' + blur.toFixed(1) + 'px)' : 'none';
+
+        var isFront = normDepth > 0.88;
+        card.classList.toggle('is-front', isFront);
+        card.setAttribute('aria-hidden', normDepth < 0.25 ? 'true' : 'false');
+      }
+
+      // Update active pagination dot
+      if (dots.length) {
+        dots.forEach(function (d, idx) {
+          var isActive = idx === closestIndex;
+          d.classList.toggle('active', isActive);
+          d.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+      }
+    }
+
+    function rotateToCard(index) {
+      // Bring card index to the front (cos(theta) = 1, so theta = 0)
+      var currentBase = currentAngle - manualOffset;
+      var targetTotal = -index * baseAngleStep;
+      var diff = (targetTotal - (currentBase + manualOffset)) % (Math.PI * 2);
+      if (diff > Math.PI) diff -= Math.PI * 2;
+      if (diff < -Math.PI) diff += Math.PI * 2;
+      targetManualOffset = manualOffset + diff;
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        targetManualOffset -= baseAngleStep;
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        targetManualOffset += baseAngleStep;
+      });
+    }
+
+    cards.forEach(function (card, idx) {
+      card.addEventListener('click', function () {
+        rotateToCard(idx);
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          rotateToCard(idx);
+        }
+      });
+    });
+
+    // Pointer drag to spin the orbit
+    on(stage, 'pointerdown', function (e) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      lastDragX = e.clientX;
+      dragVelocity = 0;
+      if (stage.setPointerCapture) {
+        try {
+          stage.setPointerCapture(e.pointerId);
+        } catch (_) {}
+      }
+    });
+
+    on(stage, 'pointermove', function (e) {
+      if (!isDragging) return;
+      var delta = e.clientX - lastDragX;
+      lastDragX = e.clientX;
+      dragVelocity = delta;
+      var sens = window.innerWidth < 600 ? 0.007 : 0.0045;
+      targetManualOffset += delta * sens;
+      manualOffset = targetManualOffset;
+    });
+
+    function endDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      targetManualOffset += dragVelocity * 0.015;
+      if (stage.releasePointerCapture && e && e.pointerId) {
+        try {
+          stage.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+      }
+    }
+
+    on(stage, 'pointerup', endDrag);
+    on(stage, 'pointercancel', endDrag);
+
+    // Scroll progress handler
+    function onScroll() {
+      if (reduceMotion.matches) return;
+      var rect = section.getBoundingClientRect();
+      var scrollDist = rect.height - window.innerHeight;
+      if (scrollDist > 0) {
+        var progress = -rect.top / scrollDist;
+        progress = Math.max(0, Math.min(1, progress));
+        targetAngle = progress * Math.PI * 2 * 1.5;
+      }
+    }
+
+    function tick() {
+      if (!reduceMotion.matches) {
+        manualOffset += (targetManualOffset - manualOffset) * 0.12;
+        currentAngle += ((targetAngle + manualOffset) - currentAngle) * 0.12;
+      } else {
+        manualOffset += (targetManualOffset - manualOffset) * 0.2;
+        currentAngle = manualOffset;
+      }
+
+      render(currentAngle);
+      requestAnimationFrame(tick);
+    }
+
+    on(window, 'scroll', onScroll, { passive: true });
+    on(window, 'resize', function () {
+      metrics = updateMetrics();
+      render(currentAngle);
+    }, { passive: true });
+
+    onScroll();
+    metrics = updateMetrics();
+    render(0);
+    tick();
+  }
+
   /* -------------------------------------------------------------- bootstrap */
   function init() {
     initLoader();
@@ -529,6 +777,7 @@
     initTypewriter();
     initAccordions();
     initTabs();
+    initGalleryOrbit();
     initField();
   }
 

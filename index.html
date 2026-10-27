@@ -232,64 +232,158 @@
     </section>
 
     <!-- ===== GALLERY ===== -->
-    <section id="gallery" class="sect sect--tint">
-      <div class="wrap">
-        <div class="sect-label reveal"><span class="num">02</span><h2>Gallery</h2><span class="rule"></span></div>
-        <p class="sect-sub reveal">A look back at our events, workshops, and the people behind Code Crypt.</p>
+    <section id="gallery" class="sect sect--tint gallery-orbit-section" aria-label="Code Crypt Gallery">
+      <div class="gallery-sticky-track">
+        <!-- Atmospheric ambient glow -->
+        <div class="gallery-ambient-glow" aria-hidden="true"></div>
 
-        <!--
-          GALLERY PLACEHOLDERS — swap the <i class="fa-solid ..."> inside
-          .polaroid-frame for an <img src="your-photo.jpg" alt="..."> when
-          real photos are ready. Sizing keeps working automatically.
-        -->
-        <div class="scrapbook reveal">
-          <div class="polaroid gi-wide">
-            <div class="polaroid-frame">
-              <img src="gallery/winners.jpeg" alt="Winners of the Codecraze Hackathon holding certificates on stage" width="1280" height="575" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Hackathon Winners</div>
+        <!-- Section header -->
+        <div class="gallery-header">
+          <div class="sect-label gallery-sect-label reveal">
+            <span class="num">02</span><h2>Gallery</h2><span class="rule"></span>
           </div>
-          <div class="polaroid">
-            <div class="polaroid-frame">
-              <img src="gallery/interacting.jpeg" alt="Students collaborating and coding together at the hackathon" width="1280" height="960" loading="lazy" decoding="async" />
+          <p class="gallery-subtitle reveal">MOMENTS THAT BUILD MORE THAN CODE</p>
+          <p class="gallery-desc reveal">A look back at our events, workshops, and the community behind Code Crypt.</p>
+        </div>
+
+        <!-- 3D Orbit Stage -->
+        <div class="gallery-orbit-stage" id="gallery-orbit-stage" role="region" aria-roledescription="3D Photo Carousel" aria-label="Interactive 3D photo orbit of Code Crypt events">
+          <!-- Orbital perspective lines and glowing beads -->
+          <svg class="orbit-svg" viewBox="0 0 1000 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="orbit-grad-main" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2c666e" stop-opacity="0.15" />
+                <stop offset="25%" stop-color="#6a9196" stop-opacity="0.65" />
+                <stop offset="50%" stop-color="#f0edee" stop-opacity="0.9" />
+                <stop offset="75%" stop-color="#6a9196" stop-opacity="0.65" />
+                <stop offset="100%" stop-color="#2c666e" stop-opacity="0.15" />
+              </linearGradient>
+              <linearGradient id="orbit-grad-sub" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2c666e" stop-opacity="0.05" />
+                <stop offset="50%" stop-color="#6a9196" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="#2c666e" stop-opacity="0.05" />
+              </linearGradient>
+              <radialGradient id="orbit-glow-center" cx="50%" cy="56%" r="48%">
+                <stop offset="0%" stop-color="#2c666e" stop-opacity="0.32" />
+                <stop offset="45%" stop-color="#2c666e" stop-opacity="0.1" />
+                <stop offset="80%" stop-color="#111817" stop-opacity="0" />
+              </radialGradient>
+              <filter id="glow-node" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Radial ambient spotlight -->
+            <ellipse cx="500" cy="270" rx="460" ry="130" fill="url(#orbit-glow-center)" />
+
+            <!-- Outer faint orbit -->
+            <ellipse cx="500" cy="270" rx="470" ry="130" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="4 6" />
+
+            <!-- Main orbit ring -->
+            <ellipse cx="500" cy="270" rx="420" ry="115" stroke="url(#orbit-grad-main)" stroke-width="1.5" />
+
+            <!-- Inner faint orbit -->
+            <ellipse cx="500" cy="270" rx="350" ry="95" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="2 4" />
+
+            <!-- Orbital nodes (beads) along the ellipse -->
+            <circle cx="80" cy="270" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
+            <circle cx="200" cy="350" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
+            <circle cx="500" cy="385" r="5" fill="#f0edee" filter="url(#glow-node)" />
+            <circle cx="800" cy="350" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
+            <circle cx="920" cy="270" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
+            <circle cx="750" cy="190" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
+            <circle cx="250" cy="190" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
+          </svg>
+
+          <!-- Orbit Cards (Billboarded: Facing Viewer Directly) -->
+          <div class="orbit-carousel" id="orbit-carousel">
+            <div class="orbit-card" data-index="0" role="button" tabindex="0" aria-label="Photo 1 of 8: Hackathon Winners">
+              <div class="orbit-card-frame">
+                <img src="gallery/winners.jpeg" alt="Winners of the Codecraze Hackathon holding certificates on stage" width="1280" height="575" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Hackathon Winners</div>
+              </div>
             </div>
-            <div class="polaroid-cap">Team Collaboration</div>
+
+            <div class="orbit-card" data-index="1" role="button" tabindex="0" aria-label="Photo 2 of 8: Team Collaboration">
+              <div class="orbit-card-frame">
+                <img src="gallery/interacting.jpeg" alt="Students collaborating and coding together at the hackathon" width="1280" height="960" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Team Collaboration</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="2" role="button" tabindex="0" aria-label="Photo 3 of 8: Hackathon Kickoff">
+              <div class="orbit-card-frame">
+                <img src="gallery/workshop.jpeg" alt="Speaker introducing Codecraze: A Vibecoding Mini Hackathon" width="720" height="1280" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Hackathon Kickoff</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="3" role="button" tabindex="0" aria-label="Photo 4 of 8: Project Evaluation">
+              <div class="orbit-card-frame">
+                <img src="gallery/evaluation.jpeg" alt="Participants demonstrating project to faculty judge" width="1040" height="780" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Project Evaluation</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="4" role="button" tabindex="0" aria-label="Photo 5 of 8: Project Presentation">
+              <div class="orbit-card-frame">
+                <img src="gallery/speaking.jpeg" alt="Participant presenting Chefageddon project on stage" width="720" height="1280" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Project Presentation</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="5" role="button" tabindex="0" aria-label="Photo 6 of 8: Code Crypt Team">
+              <div class="orbit-card-frame">
+                <img src="gallery/team.jpeg" alt="Code Crypt organizing team on stage under the Codecraze banner" width="1280" height="960" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Code Crypt Team</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="6" role="button" tabindex="0" aria-label="Photo 7 of 8: Live Demo">
+              <div class="orbit-card-frame">
+                <img src="gallery/showcasing.jpeg" alt="Team showcasing their application demo to the faculty judge" width="575" height="1280" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Live Demo</div>
+              </div>
+            </div>
+
+            <div class="orbit-card" data-index="7" role="button" tabindex="0" aria-label="Photo 8 of 8: Stage Pitch">
+              <div class="orbit-card-frame">
+                <img src="gallery/presentation.jpeg" alt="Participant pitching on stage and interacting with judge" width="575" height="1280" loading="eager" decoding="async" />
+                <div class="orbit-card-overlay"></div>
+                <div class="orbit-card-cap">Stage Pitch</div>
+              </div>
+            </div>
           </div>
-          <div class="polaroid gi-tall">
-            <div class="polaroid-frame">
-              <img src="gallery/workshop.jpeg" alt="Speaker introducing Codecraze: A Vibecoding Mini Hackathon" width="720" height="1280" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Hackathon Kickoff</div>
+        </div>
+
+        <!-- Controls & Scroll Hint -->
+        <div class="gallery-footer">
+          <div class="orbit-controls" aria-label="Orbit controls">
+            <button class="orbit-btn orbit-btn--prev" type="button" aria-label="Rotate to previous photo">
+              <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <div class="orbit-dots" id="orbit-dots" role="tablist" aria-label="Photo selection"></div>
+            <button class="orbit-btn orbit-btn--next" type="button" aria-label="Rotate to next photo">
+              <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </button>
           </div>
-          <div class="polaroid">
-            <div class="polaroid-frame">
-              <img src="gallery/evaluation.jpeg" alt="Participants demonstrating project to faculty judge" width="1040" height="780" loading="lazy" decoding="async" />
+
+          <div class="gallery-scroll-hint" aria-hidden="true">
+            <div class="mouse-icon">
+              <span class="mouse-wheel"></span>
             </div>
-            <div class="polaroid-cap">Project Evaluation</div>
-          </div>
-          <div class="polaroid gi-tall">
-            <div class="polaroid-frame">
-              <img src="gallery/speaking.jpeg" alt="Participant presenting Chefageddon project on stage" width="720" height="1280" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Project Presentation</div>
-          </div>
-          <div class="polaroid gi-wide">
-            <div class="polaroid-frame">
-              <img src="gallery/team.jpeg" alt="Code Crypt organizing team on stage under the Codecraze banner" width="1280" height="960" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Code Crypt Team</div>
-          </div>
-          <div class="polaroid gi-tall">
-            <div class="polaroid-frame">
-              <img src="gallery/showcasing.jpeg" alt="Team showcasing their application demo to the faculty judge" width="575" height="1280" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Live Demo</div>
-          </div>
-          <div class="polaroid gi-tall">
-            <div class="polaroid-frame">
-              <img src="gallery/presentation.jpeg" alt="Participant pitching on stage and interacting with judge" width="575" height="1280" loading="lazy" decoding="async" />
-            </div>
-            <div class="polaroid-cap">Stage Pitch</div>
+            <span class="scroll-explore-text">SCROLL TO EXPLORE</span>
           </div>
         </div>
       </div>
