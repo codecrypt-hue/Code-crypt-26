@@ -278,26 +278,34 @@
             </defs>
 
             <!-- Radial ambient spotlight -->
-            <ellipse cx="500" cy="270" rx="460" ry="130" fill="url(#orbit-glow-center)" />
+            <ellipse cx="500" cy="225" rx="460" ry="110" fill="url(#orbit-glow-center)" />
 
             <!-- Outer faint orbit -->
-            <ellipse cx="500" cy="270" rx="470" ry="130" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="4 6" />
+            <ellipse cx="500" cy="225" rx="470" ry="98" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="4 6" />
 
             <!-- Main orbit ring -->
-            <ellipse cx="500" cy="270" rx="420" ry="115" stroke="url(#orbit-grad-main)" stroke-width="1.5" />
+            <ellipse cx="500" cy="225" rx="420" ry="85" stroke="url(#orbit-grad-main)" stroke-width="1.5" />
 
             <!-- Inner faint orbit -->
-            <ellipse cx="500" cy="270" rx="350" ry="95" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="2 4" />
+            <ellipse cx="500" cy="225" rx="355" ry="70" stroke="url(#orbit-grad-sub)" stroke-width="1" stroke-dasharray="2 4" />
 
             <!-- Orbital nodes (beads) along the ellipse -->
-            <circle cx="80" cy="270" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
-            <circle cx="200" cy="350" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
-            <circle cx="500" cy="385" r="5" fill="#f0edee" filter="url(#glow-node)" />
-            <circle cx="800" cy="350" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
-            <circle cx="920" cy="270" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
-            <circle cx="750" cy="190" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
-            <circle cx="250" cy="190" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
+            <circle cx="80" cy="225" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
+            <circle cx="205" cy="290" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
+            <circle cx="500" cy="310" r="5" fill="#f0edee" filter="url(#glow-node)" />
+            <circle cx="795" cy="290" r="4" fill="#f0edee" opacity="0.85" filter="url(#glow-node)" />
+            <circle cx="920" cy="225" r="3" fill="#f0edee" opacity="0.6" filter="url(#glow-node)" />
+            <circle cx="750" cy="160" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
+            <circle cx="250" cy="160" r="3" fill="#6a9196" opacity="0.5" filter="url(#glow-node)" />
           </svg>
+
+          <!-- Side Navigation Buttons -->
+          <button class="orbit-btn orbit-btn--prev" type="button" aria-label="Rotate to previous photo">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <button class="orbit-btn orbit-btn--next" type="button" aria-label="Rotate to next photo">
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
 
           <!-- Orbit Cards (Billboarded: Facing Viewer Directly) -->
           <div class="orbit-carousel" id="orbit-carousel">
@@ -367,19 +375,10 @@
           </div>
         </div>
 
-        <!-- Controls & Scroll Hint -->
+        <!-- Scroll Hint with Stem Line matching reference -->
         <div class="gallery-footer">
-          <div class="orbit-controls" aria-label="Orbit controls">
-            <button class="orbit-btn orbit-btn--prev" type="button" aria-label="Rotate to previous photo">
-              <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-            </button>
-            <div class="orbit-dots" id="orbit-dots" role="tablist" aria-label="Photo selection"></div>
-            <button class="orbit-btn orbit-btn--next" type="button" aria-label="Rotate to next photo">
-              <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-            </button>
-          </div>
-
           <div class="gallery-scroll-hint" aria-hidden="true">
+            <div class="scroll-stem"></div>
             <div class="mouse-icon">
               <span class="mouse-wheel"></span>
             </div>

@@ -580,17 +580,17 @@
     function updateMetrics() {
       var stageRect = stage.getBoundingClientRect();
       var stageW = stageRect.width || window.innerWidth;
-      var stageH = stageRect.height || (window.innerHeight * 0.6);
+      var stageH = stageRect.height || (window.innerHeight * 0.55);
 
-      var rx = Math.min(stageW * 0.40, 470);
-      var ry = Math.min(stageH * 0.22, 110);
+      var rx = Math.min(stageW * 0.40, 460);
+      var ry = Math.min(stageH * 0.16, 70);
 
       if (window.innerWidth < 600) {
-        rx = Math.min(stageW * 0.37, 160);
-        ry = Math.min(stageH * 0.18, 50);
+        rx = Math.min(stageW * 0.35, 145);
+        ry = Math.min(stageH * 0.13, 38);
       } else if (window.innerWidth < 900) {
-        rx = Math.min(stageW * 0.39, 310);
-        ry = Math.min(stageH * 0.20, 80);
+        rx = Math.min(stageW * 0.38, 280);
+        ry = Math.min(stageH * 0.15, 52);
       }
 
       return { rx: rx, ry: ry, stageW: stageW, stageH: stageH };
@@ -622,12 +622,12 @@
         }
 
         // Perspective foreshortening
-        var persp = 0.84 + 0.24 * normDepth;
+        var persp = 0.86 + 0.20 * normDepth;
         var x = rx * sinTheta * persp;
-        var y = ry * z + (metrics.stageW > 600 ? 14 : 8) * normDepth;
+        var y = ry * z;
 
-        // Front card is scale ~1.06, rear card is scale ~0.58
-        var scale = 0.58 + 0.48 * normDepth;
+        // Front card is scale ~1.05, rear card is scale ~0.58
+        var scale = 0.58 + 0.47 * normDepth;
 
         // Opacity: front is 1.0, rear is 0.38
         var opacity = 0.38 + 0.62 * Math.pow(normDepth, 0.85);
